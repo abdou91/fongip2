@@ -1,0 +1,15 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_financing_request,financing_request,model_financing_request,,1,1,1,1
+access_activity_sector,activity_sector,model_activity_sector,,1,1,1,1
+access_financing_filiere,financing_filiere,model_financing_filiere,,1,1,1,1
+access_financing_psp,financing_psp,model_financing_psp,,1,1,1,1
+access_legal_status,leagl_status,model_legal_status,,1,1,1,1
+
+access_financing_request_import,financing_request_import,model_financing_request_import,,1,1,1,1
+access_financing_request_line,financing_request_line,model_financing_request_line,,1,1,1,1
+
+access_res_country_region,res_country_region,model_res_country_region,,1,1,1,1
+access_res_country_department,res_country_department,model_res_country_department,,1,1,1,1
+
+access_company_type,company_type,model_company_type,,1,1,1,1
+

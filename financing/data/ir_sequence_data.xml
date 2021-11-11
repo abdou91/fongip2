@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="seq_numero_ordre" model="ir.sequence">
+            <field name="name">Numéro d'ordre</field>
+            <field name="code">financing.request</field>
+            <field name="prefix"></field>
+            <field name="padding">4</field>
+        </record>
+
+    </data>
+</odoo>

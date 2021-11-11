@@ -1,0 +1,184 @@
+<odoo>
+  <data>
+    <!--*************Request financing***************** -->
+    <record id="financing_request_form" model="ir.ui.view">
+      <field name="name">financing.request.form</field>
+      <field name="model">financing.request</field>
+      <field name="arch" type="xml">
+        <form string="Demande de financement">
+          <sheet>
+            <group col="2">
+              <group>
+                <field name="order_number"/>
+                <field name="reception_mode"/>
+                <field name="transmission_date"/>
+                <field name="transmitted_to"/>
+                <field name="partner_id"/>
+                <field name="imputation_date"/>
+              </group>
+              <group>
+                <field name="currency_id" invisible="1"/>
+                <field name="project_cost" options="{'currency_field': 'currency_id'}"/>
+                <field name="credit_requested" options="{'currency_field': 'currency_id'}"/>
+                <field name="quotite"/>
+                <field name="guarantee_amount" options="{'currency_field': 'currency_id'}"/>
+                <field name="number_of_job"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="financing_request_tree" model="ir.ui.view">
+      <field name="name">financing.request.tree</field>
+      <field name="model">financing.request</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="order_number"/>
+          <field name="transmission_date"/>
+          <field name="reception_mode"/>
+          <field name="partner_id"/>
+          <field name="project_cost"/>
+          <field name="credit_requested"/>
+          <field name="quotite"/>
+          <field name="guarantee_amount"/>
+          <field name="number_of_job"/>
+        </tree>
+      </field>
+    </record>
+    <!-- actions opening views on models -->
+    
+    <record model="ir.actions.act_window" id="financing_request_action">
+      <field name="name">Demande de financement</field>
+      <field name="res_model">financing.request</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="xml">
+        <p class="oe_view_nocontent_create">
+          Cliquer pour enregistrer une demande de financement
+        </p>
+      </field>
+    </record>
+
+
+    <!--*************Import Request financing***************** -->
+    <record id="financing_request_import_form" model="ir.ui.view">
+      <field name="name">financing.request.import</field>
+      <field name="model">financing.request.import</field>
+      <field name="arch" type="xml">
+        <form string="Import des demandes de financement">
+            <header>
+                <button modifiers="{'invisible':[['state','not in',['draft']]]}"
+                    name="confirm"
+                    states="draft"
+                    string="Confirmer"
+                    type="object"
+                    class="oe_highlight"
+                    />
+                <button modifiers="{'invisible':[['state','not in',['draft']]]}"
+                    name="clear_all_lines"
+                    states="draft"
+                    string="Effacer"
+                    type="object"
+                    class="oe_highlight"
+                    />
+                <field name="state" widget="statusbar" readonly="1"/>
+          </header>
+          <sheet>
+            <group col="2">
+              <group>
+                <field name="import_date"/>
+                <field name="data" filename="filename"/>
+              </group>
+              <group>
+                <field name="imported_by"/>
+              </group>
+            </group>
+            <notebook>
+              <page string = "Demandes de financement">
+                <field name="request_line_ids">
+                  <tree>
+                    <field name="transmission_date"/>
+                    <field name="reception_mode"/>
+                    <field name="customer_name"/>
+                    <field name="genre"/>
+                    <field name="email"/>
+                    <field name="phone"/>
+                    <field name="customer_company_name"/>
+                    <field name="legal_status_name"/>
+                    <field name="activity_sector_name"/>
+                    <field name="region_name"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="project_cost" options="{'currency_field': 'currency_id'}"/>
+                    <field name="credit_requested" options="{'currency_field': 'currency_id'}"/>
+                    <field name="quotite"/>
+                    <field name="guarantee_amount" options="{'currency_field': 'currency_id'}"/>
+                    <field name="number_of_job"/>
+                    <field name="imputation_date"/>
+                    <field name="transmitted_to"/>
+                  </tree>
+                </field>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="financing_request_import_tree" model="ir.ui.view">
+      <field name="name">financing.request.import.tree</field>
+      <field name="model">financing.request.import</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="import_date"/>
+          <field name="imported_by"/>
+        </tree>
+      </field>
+    </record>
+    <!-- actions opening views on models -->
+    
+    <record model="ir.actions.act_window" id="financing_request_import_action">
+      <field name="name">Import demandes de financement</field>
+      <field name="res_model">financing.request.import</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="xml">
+        <p class="oe_view_nocontent_create">
+          Cliquer pour importer 
+        </p>
+      </field>
+    </record>
+
+    <menuitem
+      name="Financement"  
+      id="menu_root"
+      groups="hr.group_hr_user"
+      web_icon="financing,static/description/icon.png"
+      sequence="100"
+      />
+    <menuitem 
+              name="Financement" 
+              id="menu_financing" 
+              parent="menu_root"
+              />
+    <menuitem 
+              name="Demandes" 
+              id="menu_financing_request" 
+              parent="menu_financing"
+              action="financing_request_action"
+              sequence="10"
+              />
+    <menuitem 
+              name="Imports" 
+              id="menu_financing_request_import" 
+              parent="menu_financing"
+              action="financing_request_import_action"
+              sequence="20"
+              />
+    <menuitem 
+              name="Configuration" 
+              id="menu_configuration" 
+              parent="menu_root"
+              sequence="20"
+              />
+  </data>
+</odoo>
