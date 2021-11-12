@@ -80,7 +80,7 @@ class FinancingRequestImport(models.Model):
                         dico['reception_mode'] = 'dossier_electronique'
                     else:
                         dico['reception_mode'] = 'dossier_physique'
-                    customer = self.env['res.partner'].search([('mobile',request_line.phone)])
+                    customer = self.env['res.partner'].search([('mobile','=',request_line.phone)])
                     if customer:
                         dico['partner_id'] = customer.id
                     else:
@@ -95,11 +95,17 @@ class FinancingRequestImport(models.Model):
                             company_dico = {}
                             company_dico['name'] = request_line.customer_company_name
                             company_dico['company_type'] = 'company'
-                            legal_status = self.env['legal_status'].search([('name','=',request_line.legal_status_name)])
+                            legal_status = self.env['legal.status'].search([('name','=',request_line.legal_status_name)])
                             if legal_status:
+                                company_dico['legal_status_id'] = legal_status.id
+                            else:
+                                legal_status = self.env['legal.status'].create({'name':request_line.legal_status_name,'description':request_line.legal_status_name})
                                 company_dico['legal_status_id'] = legal_status.id
                             activity_sector = self.env['activity.sector'].search([('name','=',request_line.activity_sector_name)])
                             if activity_sector:
+                                company_dico['activity_sector_id'] = activity_sector.id
+                            else:
+                                activity_sector = self.env['activity.sector'].create({'name':request_line.activity_sector_name})
                                 company_dico['activity_sector_id'] = activity_sector.id
                             #region
                             region = self.env['res.country.region'].search([('name','=',request_line.region_name)])
