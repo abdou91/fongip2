@@ -80,7 +80,7 @@ class FinancingRequestImport(models.Model):
                         dico['reception_mode'] = 'dossier_electronique'
                     else:
                         dico['reception_mode'] = 'dossier_physique'
-                    customer = self.env['res.partner'].search([('mobile','=',request_line.phone)])
+                    customer = self.env['res.partner'].search([('mobile','=',request_line.phone)],limit=1)
                     if customer:
                         dico['partner_id'] = customer.id
                     else:
@@ -90,25 +90,25 @@ class FinancingRequestImport(models.Model):
                         customer_dico['genre'] = request_line.genre
                         customer_dico['mobile'] = request_line.phone
                         customer_dico['email'] = request_line.email
-                        customer_company = self.env['res.partner'].search([('name','like',request_line.customer_company_name),('company_type','=','company')])
+                        customer_company = self.env['res.partner'].search([('name','like',request_line.customer_company_name),('company_type','=','company')],limit=1)
                         if not customer_company:
                             company_dico = {}
                             company_dico['name'] = request_line.customer_company_name
                             company_dico['company_type'] = 'company'
-                            legal_status = self.env['legal.status'].search([('name','=',request_line.legal_status_name)])
+                            legal_status = self.env['legal.status'].search([('name','=',request_line.legal_status_name)],limit=1)
                             if legal_status:
                                 company_dico['legal_status_id'] = legal_status.id
                             else:
                                 legal_status = self.env['legal.status'].create({'name':request_line.legal_status_name,'description':request_line.legal_status_name})
                                 company_dico['legal_status_id'] = legal_status.id
-                            activity_sector = self.env['activity.sector'].search([('name','=',request_line.activity_sector_name)])
+                            activity_sector = self.env['activity.sector'].search([('name','=',request_line.activity_sector_name)],limit=1)
                             if activity_sector:
                                 company_dico['activity_sector_id'] = activity_sector.id
                             else:
                                 activity_sector = self.env['activity.sector'].create({'name':request_line.activity_sector_name})
                                 company_dico['activity_sector_id'] = activity_sector.id
                             #region
-                            region = self.env['res.country.region'].search([('name','=',request_line.region_name)])
+                            region = self.env['res.country.region'].search([('name','=',request_line.region_name)],limit=1)
                             if region:
                                 company_dico['region_id'] = region.id
                             else:
@@ -119,7 +119,7 @@ class FinancingRequestImport(models.Model):
                             customer_dico['parent_id'] = company.id
                         customer = self.env['res.partner'].create(customer_dico)
                     dico['partner_id'] = customer.id
-                    employee = self.env['hr.employee'].search([('name','like',request_line.transmitted_to)])
+                    employee = self.env['hr.employee'].search([('name','like',request_line.transmitted_to)],limit=1)
                     if employee:
                         dico['transmitted_to'] = employee.id
                 #create financing_request
