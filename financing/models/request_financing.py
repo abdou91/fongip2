@@ -80,7 +80,7 @@ class FinancingRequestImport(models.Model):
                         dico['reception_mode'] = 'dossier_electronique'
                     else:
                         dico['reception_mode'] = 'dossier_physique'
-                    customer = self.env['res.partner'].search([('phone',request_line.phone)])
+                    customer = self.env['res.partner'].search([('mobile',request_line.phone)])
                     if customer:
                         dico['partner_id'] = customer.id
                     else:
