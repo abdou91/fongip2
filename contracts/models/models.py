@@ -41,6 +41,7 @@ class Respartner(models.Model):
 
 class FongipJuridiqueTypeContrat(models.Model):
     _name = 'contract.type'
+    _description = "Contracts"
     name = fields.Char(string=u'Type de contrat', size=128)
     code = fields.Char(string=u'Code', size=128)
 

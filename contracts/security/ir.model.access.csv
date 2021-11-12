@@ -1,5 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_contract_type,contract.type,model_contract_type,contracts.group_juridique,contracts.group_contrat_marche,1,1,1,1
-access_contract,contract,model_contract,contracts.group_juridique,contracts.group_contrat_marche,1,1,1,1
-access_contract_decaissement,contract_decaissement,model_contract_decaissement,contracts.group_juridique,contracts.group_contrat_marche,1,1,1,1
-access_contract_avenant,contract_avenant,model_contract_avenant,contracts.group_juridique,contracts.group_contrat_marche,1,1,1,1
+access_contract_type,contract.type,model_contract_type,,1,1,1,1
+access_contract,contract,model_contract,,1,1,1,1
+access_contract_decaissement,contract_decaissement,model_contract_decaissement,,1,1,1,1
+access_contract_avenant,contract_avenant,model_contract_avenant,,1,1,1,1
