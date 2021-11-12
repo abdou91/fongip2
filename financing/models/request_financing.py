@@ -74,12 +74,8 @@ class FinancingRequestImport(models.Model):
                     dico['credit_requested'] = request_line.credit_requested
                     #dico['guarantee_amount'] = request_line.guarantee_amount
                     dico['imputation_date'] = request_line.imputation_date
-
-                    reception_mode = request_line.reception_mode
-                    if reception_mode.strip().lower() == "dossier électronique":
-                        dico['reception_mode'] = 'dossier_electronique'
-                    else:
-                        dico['reception_mode'] = 'dossier_physique'
+                    dico['reception_mode'] = request_line.reception_mode
+                    
                     customer = self.env['res.partner'].search([('mobile','=',request_line.phone)],limit=1)
                     if customer:
                         dico['partner_id'] = customer.id
