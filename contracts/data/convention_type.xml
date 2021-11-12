@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!--record id="convention_garantie" model="contract.type">
+            <field name="name">Convention de Garantie</field>
+            <field name="code">cgar</field>
+        </record>
+        <record id="convention_cadre_garantie" model="contract.type">
+            <field name="name">Convention cadre de garantie</field>
+            <field name="code">ccgar</field>
+        </record>
+        <record id="convention_refinancement" model="contract.type">
+            <field name="name">Convention de refinancement</field>
+            <field name="code">cref</field>
+        </record-->
+        <record id="convention_partenariat" model="contract.type">
+            <field name="name">Convention de partenariat</field>
+            <field name="code">cpart</field>
+        </record>
+        <record id="convention_dat" model="contract.type">
+            <field name="name">Convention de compte de dépôt à terme (DAT)</field>
+            <field name="code">cdat</field>
+        </record> 
+        <!--record id="convention_garantie_financment" model="contract.type">
+            <field name="name">Convention de garantie et de financement</field>
+            <field name="code">cgarf</field>
+        </record>
+        <record id="convention_financment" model="contract.type">
+            <field name="name">Convention de financement</field>
+            <field name="code">cfin</field>
+        </record-->
+        <record id="contrat_bail" model="contract.type">
+            <field name="name">Contrat de bail</field>
+            <field name="code">cbail</field>
+        </record>
+        <record id="contrat_assurance" model="contract.type">
+            <field name="name">Contrat d’assurance</field>
+            <field name="code">casur</field>
+        </record>
+        <record id="contrat_location" model="contract.type">
+            <field name="name">Contrat de location</field>
+            <field name="code">cloc</field>
+        </record>
+        <record id="contrat_prestation_service" model="contract.type">
+            <field name="name">Contrat de prestation de service</field>
+            <field name="code">cserv</field>
+        </record>
+        <record id="contrat_marche_public" model="contract.type">
+            <field name="name">Contrat de marché public</field>
+            <field name="code">cmpub</field>
+        </record>
+        <record id="contrat_fourniture_service" model="contract.type">
+            <field name="name">Contrat de fourniture de service</field>
+            <field name="code">cfser</field>
+        </record>
+        <!--record id="accord_confinancement" model="contract.type">
+            <field name="name">Accord de cofinancement</field>
+            <field name="code">cacof</field>
+        </record-->
+        <record id="protocole_accord" model="contract.type">
+            <field name="name">Protocole d'accord</field>
+            <field name="code">prodac</field>
+        </record>
+    </data>
+</odoo>
+

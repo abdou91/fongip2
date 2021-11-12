@@ -1,0 +1,586 @@
+<odoo>
+  <data>
+    <record id="contract_type_form" model="ir.ui.view">
+      <field name="name">contract.type.form</field>
+      <field name="model">contract.type</field>
+      <field name="arch" type="xml">
+        <form string="Type de contrat">
+          <sheet>
+            <group col="2">
+              <group>
+                <field name="name"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="contract_type_tree" model="ir.ui.view">
+      <field name="name">contract_type.tree</field>
+      <field name="model">contract.type</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+        </tree>
+      </field>
+    </record>
+    <!-- actions opening views on models -->
+    
+    <record model="ir.actions.act_window" id="contract_type_action">
+      <field name="name">Type de contrat</field>
+      <field name="res_model">contract.type</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="xml">
+        <p class="oe_view_nocontent_create">
+          Cliquer pour enregistrer un nouveau type de contrat.
+        </p>
+      </field>
+    </record>
+
+
+<record id="fongip_banque_juridique_contrat_form" model="ir.ui.view">
+      <field name="name">contract.form</field>
+      <field name="model">contract</field>
+      <field name="arch" type="xml">
+        <form string="Contrats et conventions">
+          <header>
+            <button modifiers="{'invisible':[['state','in',['confirm','cancel',validate']]]}"
+                    name="confirmer"
+                    states="draft"
+                    string="Confirmer"
+                    type="object"
+                    class="oe_highlight"
+                    />
+            <button modifiers="{'invisible':[['state','in',['draft','validate','cancel']]]}"
+                    name="valider"
+                    states="confirm"
+                    string="Valider"
+                    type="object"
+                    class="oe_highlight"
+                    />
+            <button modifiers="{'invisible':[['state','in',['draft','validate']]]}"
+                    name="annuler"
+                    states="confirm"
+                    string="Annuler"
+                    type="object"
+                    class="oe_highlight"
+                    />
+            <field name="state" widget="statusbar" readonly="1"/>
+            
+          </header>
+
+          <sheet>
+            <field name="type_id_code" invisible ="1"/>
+            <group col="2">
+              <group>
+                <field name="name"/>
+                <field name="reference"/>
+                <field name="type_id" options="{'no_create': True, 'no_create_edit':True}" />
+                <field name="is_confidential_contract" groups="contracts.group_contrat_confidentiel"/>
+                <!-- <label name="duree"/> -->
+                <div class="o_row">
+                    <span class="ml8">Durée</span>
+                    <field name="duree" class="ml8"/>
+                    <field name="unite_mesure" class="ml8"/>
+                </div>
+                <!-- <field name="duree" class="oe_inline" placeholder="Duree" nolabel="1"/>
+                <field name="unite_mesure" class="oe_inline" nolabel="1"/> -->
+                <field name="duree_final"/>
+              </group>
+              <group>
+                <field name="currency_id" invisible="1"/>
+                <field name="montant" options="{'currency_field': 'currency_id'}"/>
+                <field name="montant_final" options="{'currency_field': 'currency_id'}"/>
+                <field name="renouvellement_mode"/>
+                <field name="contact_person_id"/>
+              </group>
+                
+              </group>
+              <group col="2" string = "Contractants" >
+                <field name="contractant_ids" mode="kanban"  domain = "[('is_company','=',True)]" widget ="many2many_kanban"> 
+                                <kanban>
+                                    <field name="id"/>
+                                    <field name="color"/>
+                                    <field name="name"/>
+                                    <field name="title"/>
+                                    <field name="type"/>
+                                    <field name="email"/>
+                                    <field name="parent_id"/>
+                                    <field name="is_company"/>
+                                    <field name="function"/>
+                                    <field name="phone"/>
+                                    <field name="street"/>
+                                    <field name="street2"/>
+                                    <field name="zip"/>
+                                    <field name="city"/>
+                                    <field name="country_id"/>
+                                    <field name="mobile"/>
+                                    <field name="state_id"/>
+                                    <field name="image_128"/>
+                                    <field name="lang"/>
+                                    <field name="comment"/>
+                                    <field name="display_name"/>
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <t t-set="color" t-value="kanban_color(record.color.raw_value)"/>
+                                            <div t-att-class="color + (record.title.raw_value == 1 ? ' oe_kanban_color_alert' : '') + ' oe_kanban_global_click'">
+                                                <div class="o_kanban_image">
+                                                    <img alt="" t-if="record.image_128.raw_value" t-att-src="kanban_image('res.partner', 'image_128', record.id.raw_value)"/>
+                                                    <t t-if="!record.image_128.raw_value">
+                                                        <img alt="Delivery" t-if="record.type.raw_value === 'delivery'" t-att-src="_s + &quot;/base/static/img/truck.png&quot;"/>
+                                                        <img alt="Invoice" t-if="record.type.raw_value === 'invoice'" t-att-src="_s + &quot;/base/static/img/money.png&quot;"/>
+                                                        <t t-if="record.type.raw_value !== 'invoice' &amp;&amp; record.type.raw_value !== 'delivery'">
+                                                            <img alt="Logo" t-if="record.is_company.raw_value === true" t-att-src="_s + &quot;/base/static/img/company_image.png&quot;"/>
+                                                            <img alt="Avatar" t-if="record.is_company.raw_value === $false" t-att-src="_s + &quot;/base/static/img/avatar_grey.png&quot;"/>
+                                                        </t>
+                                                    </t>
+                                                </div>
+                                                <div class="oe_kanban_details">
+                                                    <field name="name"/>
+                                                    <div t-if="record.function.raw_value"><field name="function"/></div>
+                                                    <div t-if="record.email.raw_value"><field name="email"/></div>
+                                                    <div t-if="record.type.raw_value != 'contact'">
+                                                        <div>
+                                                            <field name="zip"/>
+                                                            <field name="city"/>
+                                                        </div>
+                                                        <field t-if="record.state_id.raw_value" name="state_id"/>
+                                                        <field name="country_id"/>
+                                                    </div>
+                                                    <div t-if="record.phone.raw_value">Phone: <field name="phone" widget="phone"/></div>
+                                                    <div t-if="record.mobile.raw_value">Mobile: <field name="mobile" widget="phone"/></div>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </templates>
+
+                                </kanban>
+			</field>
+              </group>
+              <group col="4">
+                <field name="date_signature"/>
+                 <newline />
+                <field name="date_effet"/>
+                <field name="date_fin"/>
+                <field name="duree_preavis"/>
+               <field name="date_limite_preavis"/>
+                <newline />
+                 <field name="convention_ids"  widget ="many2many_binary" string ="Joindre la convention ou le contract"/>
+              </group>
+
+             <notebook>
+                <!-- widget ="many2many_kanban" context="{'res_partner_search_mode': 'customer'}"-->
+              <page string= "Signataires">
+            		<group col="1" string = "Signataires">
+                 <field name="signataire_ids" mode="kanban" domain = "[('is_company','=',False)]"> 
+                                <kanban>
+                                    <field name="id"/>
+                                    <field name="color"/>
+                                    <field name="name"/>
+                                    <field name="title"/>
+                                    <field name="type"/>
+                                    <field name="email"/>
+                                    <field name="parent_id"/>
+                                    <field name="is_company"/>
+                                    <field name="function"/>
+                                    <field name="phone"/>
+                                    <field name="street"/>
+                                    <field name="street2"/>
+                                    <field name="zip"/>
+                                    <field name="city"/>
+                                    <field name="country_id"/>
+                                    <field name="mobile"/>
+                                    <field name="state_id"/>
+                                    <field name="image_128"/>
+                                    <field name="lang"/>
+                                    <field name="comment"/>
+                                    <field name="display_name"/>
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <t t-set="color" t-value="kanban_color(record.color.raw_value)"/>
+                                            <div t-att-class="color + (record.title.raw_value == 1 ? ' oe_kanban_color_alert' : '') + ' oe_kanban_global_click'">
+                                                <div class="o_kanban_image">
+                                                    <img alt="" t-if="record.image_128.raw_value" t-att-src="kanban_image('res.partner', 'image_128', record.id.raw_value)"/>
+                                                    <t t-if="!record.image_128.raw_value">
+                                                        <img alt="Delivery" t-if="record.type.raw_value === 'delivery'" t-att-src="_s + &quot;/base/static/img/truck.png&quot;"/>
+                                                        <img alt="Invoice" t-if="record.type.raw_value === 'invoice'" t-att-src="_s + &quot;/base/static/img/money.png&quot;"/>
+                                                        <t t-if="record.type.raw_value !== 'invoice' &amp;&amp; record.type.raw_value !== 'delivery'">
+                                                            <img alt="Logo" t-if="record.is_company.raw_value === true" t-att-src="_s + &quot;/base/static/img/company_image.png&quot;"/>
+                                                            <img alt="Avatar" t-if="record.is_company.raw_value === $false" t-att-src="_s + &quot;/base/static/img/avatar_grey.png&quot;"/>
+                                                        </t>
+                                                    </t>
+                                                </div>
+                                                <div class="oe_kanban_details">
+                                                    <field name="name"/>
+                                                    <div t-if="record.function.raw_value"><field name="function"/></div>
+                                                    <div t-if="record.email.raw_value"><field name="email"/></div>
+                                                    <div t-if="record.type.raw_value != 'contact'">
+                                                        <div>
+                                                            <field name="zip"/>
+                                                            <field name="city"/>
+                                                        </div>
+                                                        <field t-if="record.state_id.raw_value" name="state_id"/>
+                                                        <field name="country_id"/>
+                                                    </div>
+                                                    <div t-if="record.phone.raw_value">Phone: <field name="phone" widget="phone"/></div>
+                                                    <div t-if="record.mobile.raw_value">Mobile: <field name="mobile" widget="phone"/></div>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                           </field>
+          	  </group>
+             </page>
+             <page string= "Avenants">
+              <field name="avenant_ids">
+                <tree editable="bottom">
+                 <field name="objet"/>
+                 <field name="date"/>
+                 <field name="type_avenant"/>
+                 <field name="montant" sum="Total"/>
+                 <field name="duree" sum="Total"/>
+                 <field name="unite_mesure" nolabel="1" class="nolabel"/>
+                 <field name="avenant_ids"  widget ="many2many_binary" string ="Avenants"/>
+                </tree>
+              </field>
+               </page>
+              <page string= "Annexes">
+             <group col="1" string = "Annexes">
+             <field name="annexe_ids"  widget ="many2many_binary" string ="Annexes"/>
+              </group>
+               </page>
+               <!--*********************************-->
+            <page string= "Décaissements">
+             <field name="decaissement_ids">
+               <tree editable="bottom">
+                 <field name="objet"/>
+                 <field name="date"/>
+                 <field name="montant" sum="Total"/>
+               </tree>
+             </field>
+            </page>
+            <page string="Comptabilité" id="account">
+
+              
+            </page>
+
+               <!--********************************-->
+               </notebook>
+               <group col="4" string = "Observations">
+                <field name="observations" nolabel ="1"/>
+              </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="contract_tree" model="ir.ui.view">
+      <field name="name">contract.tree</field>
+      <field name="model">contract</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="type_id"/>
+          <field name="duree"/>
+          <field name="date_effet"/>
+          <field name="renouvellement_mode"/>
+          <field name="date_fin"/>
+        </tree>
+      </field>
+    </record>
+
+   <record id="contract_search" model="ir.ui.view">
+      <field name="name">contract.search</field>
+      <field name="model">contract</field>
+      <field name="arch" type="xml">
+        <search string="Rechercher de contrats ou conventions">
+            <field name="name" string="Nom du contrat"/>
+            <field name="type_id" string="Type du contrat"/>
+            <field name="contractant_ids" string="Contractants"/>
+            <field name="renouvellement_mode" string="Mode de renouvellement"/>
+            <field name="date_signature" string="Date de signature"/>
+            <field name="date_fin" string="Date de fin"/>
+            <field name="date_effet" string="Date prise d'effet"/>
+            <!--separator/-->
+                    <group expand="0" string="Regrouper par">
+                        <filter name="groupby_type" string="Type de contrat" domain="[]" context="{'group_by':'type_id'}"/>
+                        <filter string="Mode de renouvellement" name="groupby_mode_renouvellement" icon="terp-personal" domain="[]"  context="{'group_by':'renouvellement_mode'}"/>
+                        <!--filter string="contractants" name="groupby_contractants" icon="terp-folder-orange" domain="[]" context="{'group_by':'contractant_ids'}"/-->
+                        <!--filter string="Signataires" icon="terp-stock_effects-object-colorize" domain="[]"  context="{'group_by':'signataire_ids'}"/-->
+                        <filter name="groupby_year_signature" context="{'group_by': 'date_signature'}" string="regrouper par date de signature"/>
+                        <filter name="groupby_year_fin" context="{'group_by': 'date_fin'}" string="regrouper par date de fin de contrat"/>
+                        <!--filter name="groupby_month_fin" context="{'group_by': 'date_fin:month'}" string="regrouper par mois de fin de contrat"/-->
+                        <filter name="groupby_year" context="{'group_by': 'date_effet'}" string="regrouper par date de prise d'effet"/>
+                    </group>
+                   <filter icon="terp-folder-orange" string="Fin de contrat de ce mois en cours" name="end_month" domain="[('date_fin','&lt;=',(datetime.date.today()+relativedelta(day=31)).strftime('%Y-%m-%d')),('date_fin','&gt;=',(datetime.date.today()-relativedelta(day=1)).strftime('%Y-%m-%d'))]" help="les contrats et convetions qui finissement ce mois"/>
+                   <filter icon="terp-folder-orange" string="Contrats signés ce mois en cours" name="signed_month" domain="[('date_signature','&lt;=',(datetime.date.today()+relativedelta(day=31)).strftime('%Y-%m-%d')),('date_signature','&gt;=',(datetime.date.today()-relativedelta(day=1)).strftime('%Y-%m-%d'))]" help="les contrats et conventions signés ce mpois en cours"/>
+                   <filter icon="terp-folder-orange" string="Prise d'effet ce mois en cours" name="effet_month"                                            domain="[('date_effet','&lt;=',(datetime.date.today()+relativedelta(day=31)).strftime('%Y-%m-%d')),('date_effet','&gt;=',(datetime.date.today()-relativedelta(day=1)).strftime('%Y-%m-%d'))]" help="les contrats qui ont pris effet ce mois en cours"/>
+        </search>
+      </field>
+      
+    </record>
+    
+    <record model="ir.actions.act_window" id="contract_convention_all_action">
+      <field name="name">Contrats et conventions</field>
+      <field name="res_model">contract</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="xml">
+        <p class="oe_view_nocontent_create">
+          Cliquer pour enregistrer un nouveau contrat.
+        </p>
+      </field>
+    </record>
+
+   <record model="ir.actions.act_window" id="contrat_partenariat">
+      <field name="name">Contrats et conventions</field>
+      <field name="res_model">contract</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[('type_id_code','=','cpart')]</field>
+      <field name="help" type="xml">
+        <p class="oe_view_nocontent_create">
+          Cliquer pour enregistrer un nouveau contrat.
+        </p>
+      </field>
+    </record>
+
+   <record model="ir.actions.act_window" id="contrat_convention_dat">
+      <field name="name">Contrats et conventions</field>
+      <field name="res_model">contract</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[('type_id_code','=','cdat')]</field>
+      <field name="help" type="xml">
+        <p class="oe_view_nocontent_create">
+          Cliquer pour enregistrer un nouveau contrat.
+        </p>
+      </field>
+    </record>
+
+   <record model="ir.actions.act_window" id="contrat_bail_action">
+      <field name="name">Contrats et conventions</field>
+      <field name="res_model">contract</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[('type_id_code','=','cbail')]</field>
+      <field name="help" type="xml">
+        <p class="oe_view_nocontent_create">
+          Cliquer pour enregistrer un nouveau contrat.
+        </p>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="protocole_accord_action">
+      <field name="name">Protocole d'accord</field>
+      <field name="res_model">contract</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[('type_id_code','=','prodac')]</field>
+      <field name="help" type="xml">
+        <p class="oe_view_nocontent_create">
+          Cliquer pour enregistrer un nouveau contrat.
+        </p>
+      </field>
+    </record>
+
+   <record model="ir.actions.act_window" id="contrat_assurance_action">
+      <field name="name">Contrats et conventions</field>
+      <field name="res_model">contract</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[('type_id_code','=','casur')]</field>
+      <field name="help" type="xml">
+        <p class="oe_view_nocontent_create">
+          Cliquer pour enregistrer un nouveau contrat.
+        </p>
+      </field>
+    </record>
+
+   <record model="ir.actions.act_window" id="contrat_location_action">
+      <field name="name">Contrats et conventions</field>
+      <field name="res_model">contract</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[('type_id_code','=','cloc')]</field>
+      <field name="help" type="xml">
+        <p class="oe_view_nocontent_create">
+          Cliquer pour enregistrer un nouveau contrat.
+        </p>
+      </field>
+    </record>
+
+   <record model="ir.actions.act_window" id="contrat_prestation_service_action">
+      <field name="name">Contrats et conventions</field>
+      <field name="res_model">contract</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[('type_id_code','=','cserv')]</field>
+      <field name="help" type="xml">
+        <p class="oe_view_nocontent_create">
+          Cliquer pour enregistrer un nouveau contrat.
+        </p>
+      </field>
+    </record>
+
+   <record model="ir.actions.act_window" id="contrat_marche_public_action">
+      <field name="name">Contrats et conventions</field>
+      <field name="res_model">contract</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[('type_id.code','=','cmpub')]</field>
+      <!--field name="domain">[('type_id_code','=','cmpub')]</field-->
+      <field name="help" type="xml">
+        <p class="oe_view_nocontent_create">
+          Cliquer pour enregistrer un nouveau contrat.
+        </p>
+      </field>
+    </record>
+
+   <record model="ir.actions.act_window" id="contrat_fourniture_service_action">
+      <field name="name">Contrats et conventions</field>
+      <field name="res_model">contract</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[('type_id_code','=','cfser')]</field>
+      <field name="help" type="xml">
+        <p class="oe_view_nocontent_create">
+          Cliquer pour enregistrer un nouveau contrat.
+        </p>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="contrat_confidentiel_action">
+      <field name="name">Contrats Confidentiel</field>
+      <field name="res_model">contract</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[('is_confidential_contract','=',1)]</field>
+      <field name="context">{'default_is_confidential_contract':1}</field>
+      <field name="help" type="xml">
+        <p class="oe_view_nocontent_create">
+          Cliquer pour enregistrer un nouveau contrat Confidentiel.
+        </p>
+      </field>
+    </record>
+
+    <menuitem 
+              name="Contrats et conventions" 
+              id="contrat_menu"
+              web_icon="contracts,static/description/icon.png"
+              sequence="30"
+              groups="contracts.group_contrat_consultation,contracts.group_juridique_juridique,contracts.group_contrat_marche"
+              />
+     <menuitem 
+              name="Contrats et conventions" 
+              id="contrat_convention_menu" 
+              parent = "contrat_menu"
+              sequence="30"
+              groups="contracts.group_contrat_consultation,contracts.group_juridique_juridique,contracts.group_contrat_marche"
+              />
+              />
+    <menuitem 
+              name="Tous les contrats et conventions" 
+              id="contrat_convention_action_menu" 
+              parent="contrat_convention_menu"
+              action="contract_convention_all_action"
+              sequence="01"
+              groups="contracts.group_contrat_consultation,contracts.group_juridique_juridique,contracts.group_contrat_marche"
+              />
+              />
+    <menuitem 
+              name="Conventions" 
+              id="convention_action_menu" 
+              parent="contrat_convention_action_menu"
+              sequence="8"
+              groups="contracts.group_contrat_consultation,contracts.group_juridique_juridique"
+              />
+    <menuitem 
+              name="Contrats" 
+              id="contrat_action_menu" 
+              parent="contrat_convention_action_menu"
+              sequence="9"
+              groups="contracts.group_contrat_consultation,contracts.group_juridique_juridique,contracts.group_contrat_marche"
+              />
+              />
+    <menuitem 
+              name="Accords" 
+              id="accord_action_menu" 
+              parent="contrat_convention_action_menu"
+              sequence="10"
+              groups="contracts.group_contrat_consultation,contracts.group_juridique_juridique"
+              /> 
+    <menuitem 
+              name="Protocole d'accord" 
+              id="protocole_accord_action_menu" 
+              parent="accord_action_menu"
+              action="protocole_accord_action"
+              sequence="10"
+              groups="contracts.group_contrat_consultation,contracts.group_juridique_juridique"
+              />   
+    <menuitem 
+              name="Conventions de partenariat" 
+              id="convention_partenariat_action_menu" 
+              parent="convention_action_menu"
+              action="contrat_partenariat"
+              sequence="13"
+              groups="contracts.group_contrat_consultation,contracts.group_juridique_juridique"
+              />       
+    <menuitem 
+              name="Conventions de compte de dépôt à terme (DAT)" 
+              id="convention_dat_action_menu" 
+              parent="convention_action_menu"
+              action="contrat_convention_dat"
+              sequence="14"
+              groups="contracts.group_contrat_consultation,contracts.group_juridique_juridique"
+              />           
+    <menuitem 
+              name="Contrats de bail" 
+              id="contrat_bail_action_menu" 
+              parent="contrat_action_menu"
+              action="contrat_bail_action"
+              sequence="15"
+              groups="contracts.group_contrat_consultation,contracts.group_juridique_juridique"
+              />       
+    <menuitem 
+              name="Contrats d’assurance" 
+              id="contrat_assurance_action_menu" 
+              parent="contrat_action_menu"
+              action="contrat_assurance_action"
+              sequence="16"
+              groups="contracts.group_contrat_consultation,contracts.group_juridique_juridique"
+              />     
+    <menuitem 
+              name="Contrats de location" 
+              id="contrat_location_action_menu" 
+              parent="contrat_action_menu"
+              action="contrat_location_action"
+              sequence="17"
+              groups="contracts.group_contrat_consultation,contracts.group_juridique_juridique"
+              />       
+    <menuitem 
+              name="Contrats de prestation de service" 
+              id="contrat_prestation_service_action_menu" 
+              parent="contrat_action_menu"
+              action="contrat_prestation_service_action"
+              sequence="18"
+              groups="contracts.group_contrat_consultation,contracts.group_juridique_juridique"
+              />      
+    <menuitem 
+              name="Contrats de marché public" 
+              id="contrat_marche_public_action_menu" 
+              parent="contrat_action_menu"
+              action="contrat_marche_public_action"
+              sequence="19"
+              groups="contracts.group_contrat_marche"
+              />
+    <menuitem 
+              name="Contrats confidentiel" 
+              id="contrat_confidentiel_menu" 
+              parent="contrat_action_menu"
+              action="contrat_confidentiel_action"
+              sequence="20"
+              groups="contracts.group_contrat_confidentiel"
+              />    
+    <menuitem 
+              name="Contrats de fourniture de service" 
+              id="contrat_fourniture_service_action_menu" 
+              parent="contrat_action_menu"
+              action="contrat_fourniture_service_action"
+              sequence="21"
+              groups="contracts.group_contrat_consultation,contracts.group_juridique_juridique"
+              />           
+      </data>
+</odoo>
+

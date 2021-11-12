@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <report 
+            string="Contrat" 
+            id="report_partner_contract" 
+            model="contract" 
+            report_type="qweb-pdf"
+            menu="False"
+            name="contracts.report_contract" 
+            file="contracts.report_contract"
+        />
+</odoo>

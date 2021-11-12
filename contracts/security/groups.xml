@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="0">
+		<record id="group_juridique" model="res.groups">
+        	<field name="name">Contrat et Convention</field>
+        </record>
+        <record id="group_juridique_juridique" model="res.groups">
+        	<field name="name">Juridique</field>
+        	<field name="implied_ids" eval="[(4, ref('contracts.group_juridique'))]"/>
+        </record>
+        <record id="group_contrat_marche" model="res.groups">
+        	<field name="name">Contrat Marché</field>
+        </record>
+        <record id="group_contrat_confidentiel" model="res.groups">
+            <field name="name">Contrat Confidentiel</field>
+        </record>
+        <record id="group_contrat_consultation" model="res.groups">
+        	<field name="name">Consultation</field>
+        	<field name="implied_ids" eval="[(4, ref('contracts.group_juridique'))]"/>
+        </record>
+
+        <record id="contracts_marche_user_marche_rule" model="ir.rule">
+            <field name="name">Contract Marché user rule</field>
+            <field name="model_id" ref="model_contract"/>
+            <field name="groups" eval="[(4,ref('contracts.group_contrat_marche'))]"></field>
+            <field name="domain_force">[('type_id.code', '=' ,'cmpub'),('is_confidential_contract', '=' ,False)]</field>
+        </record>
+        <record id="contract_type_user_marche_rule" model="ir.rule">
+            <field name="name">Contract Type User Marché rule</field>
+            <field name="model_id" ref="model_contract_type"/>
+            <field name="groups" eval="[(4,ref('contracts.group_contrat_marche'))]"></field>
+            <field name="domain_force">[('code', '=' ,'cmpub')]</field>
+        </record>
+
+        <record id="contracts_user_consultation_rule" model="ir.rule">
+            <field name="name">Contract Consultation Juridique user rule</field>
+            <field name="model_id" ref="model_contract"/>
+            <field name="groups" eval="[(4,ref('contracts.group_contrat_consultation')),(4,ref('contracts.group_juridique_juridique'))]"></field>
+            <field name="domain_force">[('type_id.code', '!=' ,'cmpub')]</field>
+        </record>
+        <record id="contract_type_user_consultation_rule" model="ir.rule">
+            <field name="name">Contract Type User Consultation Juridique rule</field>
+            <field name="model_id" ref="model_contract_type"/>
+            <field name="groups" eval="[(4,ref('contracts.group_contrat_consultation')),(4,ref('contracts.group_juridique_juridique'))]"></field>
+            <field name="domain_force">[('code', '!=' ,'cmpub')]</field>
+        </record>
+
+        <record id="contracts_user_confidentiel_rule" model="ir.rule">
+            <field name="name">Contract Confidentiel user rule</field>
+            <field name="model_id" ref="model_contract"/>
+            <field name="groups" eval="[(4,ref('contracts.group_contrat_confidentiel'))]"></field>
+            <field name="domain_force">[('is_confidential_contract', '=' ,True)]</field>
+        </record>
+	</data>
+</odoo>
