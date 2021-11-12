@@ -48,6 +48,7 @@ class FongipJuridiqueTypeContrat(models.Model):
 
 class FongipJuridiqueContrat(models.Model):
     _name = 'contract'
+    _description = 'Contract'
     name = fields.Char(string=u'Nom du contrat', size=128)
     reference = fields.Char(string="Référence")
     type_id_code = fields.Char(compute="_compute_code", store=True, readonly=True)
@@ -217,6 +218,7 @@ class ContractDecaissement(models.Model):
 
 class ContractAvenant(models.Model):
     _name = 'contract.avenant'
+    _description = 'Avenant'
 
     objet = fields.Char(string="Objet")
     montant = fields.Monetary(string="Montant")
