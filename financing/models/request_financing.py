@@ -170,6 +170,12 @@ class FinancingRequestImport(models.Model):
                     dicos[i][key] = excel_utility.convert_excel_date_to_python_date(dicos[i][key])
                 if 'imputation_date' == key and dicos[i][key]:
                     dicos[i][key] = excel_utility.convert_excel_date_to_python_date(dicos[i][key])
+                if 'reception_mode' == key and dicos[i][key]:
+                    reception_mode = dicos[i][key]
+                    if reception_mode.strip().lower() == "dossier électronique":
+                        dicos[i][key] = "dossier_electronique"
+                    else:
+                        dicos[i][key] = "dossier_physique"
 
         return dicos
 
