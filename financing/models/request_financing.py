@@ -112,7 +112,7 @@ class FinancingRequestImport(models.Model):
                             if region:
                                 company_dico['region_id'] = region.id
                             else:
-                                region = self.env['res.country.region'].create({'name':request_line.name})
+                                region = self.env['res.country.region'].create({'name':request_line.region_name})
                                 company_dico['region_id'] = region.id
                             #create company
                             company = self.env['res.partner'].create(company_dico)
