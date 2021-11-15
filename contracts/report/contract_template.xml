@@ -35,7 +35,7 @@
     </template>
 
     <template id="report_contract">
-        <t t-call="report.html_container">
+        <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
                 <t t-call="contracts.report_contrat_document"/>
             </t>
