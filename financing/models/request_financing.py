@@ -68,6 +68,8 @@ class FinancingRequestImport(models.Model):
             if record.request_line_ids:
                 dico = {}
                 for request_line in record.request_line_ids:
+                    if not request_line.phone:
+                        continue
                     dico['transmission_date'] = request_line.transmission_date
                     dico['number_of_job'] = request_line.number_of_job
                     dico['project_cost'] = request_line.project_cost
