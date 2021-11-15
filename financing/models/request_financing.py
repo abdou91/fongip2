@@ -120,8 +120,8 @@ class FinancingRequestImport(models.Model):
                     employee = self.env['hr.employee'].search([('name','like',request_line.transmitted_to)],limit=1)
                     if employee:
                         dico['transmitted_to'] = employee.id
-                #create financing_request
-                self.env['financing.request'].create(dico)
+                    #create financing_request
+                    self.env['financing.request'].create(dico)
             record.state = 'confirmed'
 
     @api.onchange('data')
