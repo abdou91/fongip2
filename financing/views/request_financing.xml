@@ -75,6 +75,13 @@
                     type="object"
                     class="oe_highlight"
                     />
+                <button modifiers="{'invisible':[['state','in',['draft','cancelled']]]}"
+                    name="cancel"
+                    states="confirm"
+                    string="Annuler"
+                    type="object"
+                    class="oe_highlight"
+                    />
                 <button modifiers="{'invisible':[['state','not in',['draft']]]}"
                     name="clear_all_lines"
                     states="draft"
