@@ -114,6 +114,7 @@
                     <field name="customer_company_name"/>
                     <field name="legal_status_name"/>
                     <field name="activity_sector_name"/>
+                    <field name="sector_name"/>
                     <field name="region_name"/>
                     <field name="currency_id" invisible="1"/>
                     <field name="project_cost" options="{'currency_field': 'currency_id'}"/>

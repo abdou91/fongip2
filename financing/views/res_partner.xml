@@ -17,17 +17,13 @@
                 <field name="dossier_count" widget="statinfo" string="Dossiers"/>
           </button>
         </xpath-->
-
-        <xpath expr="//field[@name='email']" position="after">
-            <!--field name="type_entreprise_id" attrs="{'invisible':[('company_type','=','person')]}"/-->
-            <field name="region_id"/>
-            <field name="company_type_id" attrs="{'invisible':[('company_type','=','person')]}"/>
-            <field name="legal_status_id" attrs="{'invisible':[('company_type','=','person')]}"/>
-            <!--field name="ninea" attrs="{'invisible':[('company_type','=','person')]}"/-->
-            <!--field name="registre_commerce" attrs="{'invisible':[('company_type','=','person')]}"/-->
-        </xpath>
         <xpath expr="//field[@name='category_id']" position="after">
           <!--field name="capital" attrs="{'invisible':[('company_type','=','person')]}"/-->
+          <field name="region_id"/>
+            <field name="company_type_id" attrs="{'invisible':[('company_type','=','person')]}"/>
+            <field name="legal_status_id" attrs="{'invisible':[('company_type','=','person')]}"/>
+            <field name="ninea" attrs="{'invisible':[('company_type','=','person')]}"/>
+            <field name="registre_commerce" attrs="{'invisible':[('company_type','=','person')]}"/>
           <field name="activity_sector_id" attrs="{'invisible':[('company_type','=','person')]}"/>
           <field name="filiere_id" attrs="{'invisible':[('company_type','=','person')]}" domain="[('activity_sector_id', '=',activity_sector_id )]"/>
           
