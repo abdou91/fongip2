@@ -1,0 +1,125 @@
+<odoo>
+    <data>
+    <!-- Absence -->
+    <record id="action_liste_absence" model="ir.actions.act_window">
+        <field name="name">Absence</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.absence</field>
+        <field name="search_view_id" eval="False"/>
+        <field name="view_id" eval="False"/>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+          </p>
+        </field>
+    </record>
+    <!-- Absence form -->
+    <record id="view_liste_absence_form" model="ir.ui.view">
+        <field name="name">hr.absence.form</field>
+        <field name="model">hr.absence</field>
+        <field name="arch" type="xml">
+            <form string="Absence">
+                <header>
+                    <button 
+                        string="Valider"
+                        name="action_draft" 
+                        type="object"
+                        class="oe_highlight"
+                        states="draft"
+                    />
+                    <button 
+                        string="Validation DRH"
+                        name="action_validation_drh" 
+                        type="object"
+                        class="oe_highlight"
+                        states="validation_drh"
+                        groups="hr_pointage.group_drh"
+                    />
+                    <button 
+                        string="Validation DG"
+                        name="action_validation_dg" 
+                        type="object"
+                        class="oe_highlight"
+                        states="validation_dg"
+                        groups="hr_pointage.group_dp"
+                    />
+                    <button 
+                        string="Refuser"
+                        name="action_cancel" 
+                        type="object"
+                        class="btn-danger"
+                        states="validation_drh"
+                    />
+                    <button 
+                        string="Refuser"
+                        name="action_cancel" 
+                        type="object"
+                        class="btn-danger"
+                        states="validation_dg"
+                        groups="hr_pointage.group_dp"
+                    />
+                    <button 
+                        string="Remettre à l'etat Broullion"
+                        name="action_reset_draft" 
+                        type="object"
+                        class="oe_highlight"
+                        states="cancel"
+                    />
+                    <field 
+                        name="state" 
+                        widget="statusbar" 
+                        statusbar_visible="draft,validation_drh,validation_dg,done" 
+                        readonly="1"
+                    />
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="employee" widget="selection"/>
+                        </group>
+                        <group>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Pieces Justificatives">
+                            <field name="absence_line">
+                                <tree string="Lignes" editable="bottom">
+                                    <field name="title"/>
+                                    <field name="description"/>
+                                    <field name="file" filename="fname"/>
+                                    <field name="fname" invisible="1" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Absence Tree -->
+    <record id="view_liste_absence_tree" model="ir.ui.view">
+        <field name="name">hr.absence.form</field>
+        <field name="model">hr.absence</field>
+        <field name="arch" type="xml">
+            <tree string="absences">
+                <field name="name"/>
+                <field name="employee"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <menuitem
+        name="Absence"
+        id="menu_hr_pointage_absences"
+        action='action_liste_absence'
+        parent='hr.menu_hr_root'
+        sequence='7'
+        />
+    </data>
+</odoo>

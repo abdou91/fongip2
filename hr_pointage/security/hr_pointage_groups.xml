@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="group_dp" model="res.groups">
+        <field name="name">Directeur</field>
+        <field name="category_id" ref="base.module_category_human_resources_employees"/>
+        <field name="implied_ids" eval="[(4, ref('hr.group_hr_user'))]"/>
+    </record>
+    <record id="group_dg" model="res.groups">
+        <field name="name">DG</field>
+        <field name="category_id" ref="base.module_category_human_resources_employees"/>
+        <field name="implied_ids" eval="[(4, ref('hr.group_hr_manager'))]"/>
+    </record>
+    <record id="group_sg" model="res.groups">
+        <field name="name">Sécretariat Général</field>
+        <field name="category_id" ref="base.module_category_human_resources_employees"/>
+        <field name="implied_ids" eval="[(4, ref('hr.group_hr_user'))]"/>
+    </record>
+    <record id="group_drh" model="res.groups">
+        <field name="name">DRH</field>
+        <field name="category_id" ref="base.module_category_human_resources_employees"/>
+        <field name="implied_ids" eval="[(4, ref('hr.group_hr_manager'))]"/>
+    </record>
+    <record id="group_ctg" model="res.groups">
+        <field name="name">CTG</field>
+        <field name="category_id" ref="base.module_category_human_resources_employees"/>
+        <field name="implied_ids" eval="[(4, ref('hr.group_hr_user'))]"/>
+    </record>
+    <record id="group_ag" model="res.groups">
+        <field name="name">Administration générale</field>
+        <field name="category_id" ref="base.module_category_human_resources_employees"/>
+        <field name="implied_ids" eval="[(4, ref('hr.group_hr_user'))]"/>
+    </record>
+    <record id="group_securite" model="res.groups">
+        <field name="name">Sécurité</field>
+        <field name="category_id" ref="base.module_category_human_resources_employees"/>
+        <field name="implied_ids" eval="[(4, ref('hr.group_hr_user'))]"/>
+    </record>
+    <record id="group_dci" model="res.groups">
+        <field name="name">DCI</field>
+        <field name="category_id" ref="base.module_category_human_resources_employees"/>
+        <field name="implied_ids" eval="[(4, ref('hr.group_hr_user'))]"/>
+    </record>
+	<data noupdate="0">
+        <record id="hr_pointage_hr_user_rule" model="ir.rule">
+            <field name="name">HR pointage hr user rule</field>
+            <field name="model_id" ref="model_pointage_manuel"/>
+            <field name="groups" eval="[(4,ref('hr.group_hr_user'))]"></field>
+            <field name="domain_force">['|',('employee.user_id', '=' ,user.id), ('employee.parent_id.user_id', '=', user.id)]</field>
+        </record>
+        <record id="hr_pointage_rule" model="ir.rule">
+            <field name="name">HR pointage rule</field>
+            <field name="model_id" ref="model_pointage_manuel"/>
+            <field name="groups" eval="[(4, ref('hr_pointage.group_drh')),(4, ref('hr_pointage.group_ag')),(4, ref('hr_pointage.group_securite'))]"></field>
+            <field name="domain_force">[(1,'=',1)]</field>
+        </record>
+        <record id="hr_presence_rule" model="ir.rule">
+            <field name="name">HR presence rule</field>
+            <field name="model_id" ref="model_hr_presence"/>
+            <field name="groups" eval="[(4,ref('hr.group_hr_user'))]"></field>
+            <field name="domain_force">[('employee.user_id', '=' ,user.id)]</field>
+        </record>
+        <record id="hr_presence_sup_rule" model="ir.rule">
+            <field name="name">HR presence sup rule</field>
+            <field name="model_id" ref="model_hr_presence"/>
+            <field name="groups" eval="[(4, ref('hr_pointage.group_drh')),(4, ref('hr_pointage.group_ag')),(4,ref('hr.group_hr_manager'))]"></field>
+            <field name="domain_force">[(1,'=',1)]</field>
+        </record>
+        <!-- <record id="hr_employee_rule" model="ir.rule">
+            <field name="name">HR employee rule</field>
+            <field name="model_id" ref="model_hr_employee"/>
+            <field name="groups" eval="[(4,ref('hr.group_hr_user'))]"></field>
+            <field name="domain_force">['|',('user_id', '=' ,user.id), ('parent_id.user_id', '=', user.id)]</field>
+        </record>
+        <record id="hr_employee_sup_rule" model="ir.rule">
+            <field name="name">HR employee sup rule</field>
+            <field name="model_id" ref="model_hr_employee"/>
+            <field name="groups" eval="[(4, ref('hr_pointage.group_drh')),(4, ref('hr_pointage.group_ag')),(4,ref('hr.group_hr_manager'))]"></field>
+            <field name="domain_force">[(1,'=',1)]</field>
+        </record> -->
+        <record id="hr_absence_rule" model="ir.rule">
+            <field name="name">HR absence rule</field>
+            <field name="model_id" ref="model_hr_absence"/>
+            <field name="groups" eval="[(4,ref('hr.group_hr_user'))]"></field>
+            <field name="domain_force">[('employee.user_id', '=' ,user.id)]</field>
+        </record>
+        <record id="hr_absence_sup_rule" model="ir.rule">
+            <field name="name">HR absence sup rule</field>
+            <field name="model_id" ref="model_hr_absence"/>
+            <field name="groups" eval="[(4, ref('hr_pointage.group_drh')),(4, ref('hr_pointage.group_ag')),(4,ref('hr.group_hr_manager'))]"></field>
+            <field name="domain_force">[(1,'=',1)]</field>
+        </record>
+    </data>
+</odoo>

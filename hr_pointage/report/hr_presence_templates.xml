@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_hrpresence_document">
+    <t t-call="web.external_layout">
+        <!-- <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)" /> -->
+        <div class="page" style="margin-top: 25px;">
+            <h3 style="text-align:center;color:#009FE3;">
+                Fiche récaputilative des pointages du <span t-field="o.date_from"/> au <span t-field="o.date_to"/>
+            </h3>
+            <div class="">
+                <div>
+                    <strong>Employé: </strong><span t-esc="o.employee.name"/>
+                </div>
+                <div>
+                    <strong>Responsable Service: </strong><span t-esc="o.employee.parent_id.name"/>
+                </div>
+                <div>
+                    <strong>Service: </strong><span t-esc="o.employee.department_id.name"/>
+                </div>
+                <div>
+                    <strong>Presence effective(en heures): </strong><span t-esc="int(round(o.diff_presence))"/> 
+                </div>
+                <div>
+                    <strong>Sur un total de : </strong><span t-esc="o.compute_pointed_day_for_employee(o.employee,o.date_from,o.date_to)[0] * 8"/>
+                </div>
+            </div>
+            <h3 style="text-align:center;color:#009FE3;margin-top:50px;">Historique</h3>
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th class="text-center" style="color: #FFFFFF;background-color: #009FE3;"><strong>N°</strong></th>
+                        <th class="text-center" style="color: #FFFFFF;background-color: #009FE3;"><strong>Date</strong></th>
+                        <th class="text-center" style="color: #FFFFFF;background-color: #009FE3;"><strong>Entrée</strong></th>
+                        <th class="text-center" style="color: #FFFFFF;background-color: #009FE3;"><strong>Sortie pause</strong></th>
+                        <th class="text-center" style="color: #FFFFFF;background-color: #009FE3;"><strong>Retour pause</strong></th>
+                        <th class="text-center" style="color: #FFFFFF;background-color: #009FE3;"><strong>Sortie</strong></th>
+                        <th class="text-center" style="color: #FFFFFF;background-color: #009FE3;"><strong>Présence(heures)</strong></th>
+                        <th class="text-center" style="color: #FFFFFF;background-color: #009FE3;"><strong>Retard</strong></th>
+                        <th class="text-center" style="color: #FFFFFF;background-color: #009FE3;"><strong>Observations</strong></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr t-foreach="o.get_pointages(o.date_from,o.date_to,o.employee)" t-as="pointage_manuel">
+                        <!-- eliminer les lignes vides -->
+                        <td class="text-center">
+                            <span t-esc="pointage_manuel_index + 1"/>
+                        </td>
+                        <td class="text-center">
+                            <span t-esc="pointage_manuel['date_pointage']" 
+                            t-options='{"widget": "date"}'/>
+                        </td>
+                        <t t-if = "o.day_is_not_pointed(pointage_manuel['date_pointage']) == true">
+                            <td class="text-center"></td>
+                            <td class="text-center"></td>
+                            <td class="text-center"></td>
+                            <td class="text-center"></td>
+                            <td class="text-center">
+                                <span>Absent</span>
+                            </td>
+                            <td class="text-center"></td>
+                            <t t-if = "o.missing_day_is_justify(o.employee, pointage_manuel['date_pointage']) == true">
+                                <td class="text-center">
+                                    <span>Absence Justifiée</span>
+                                </td>
+                            </t>
+                            <t t-elif = "o.missing_day_is_holiday(o.employee, pointage_manuel['date_pointage']) == true">
+                                <td class="text-center">
+                                    <span>Congé Validé</span>
+                                </td>
+                            </t>
+                            <t t-else="">
+                                <td class="text-center">
+                                    <span>Absent</span>
+                                </td>
+                            </t>
+                        </t>
+                        <t t-else="">       
+                            <td class="text-center">
+                                <span t-esc="pointage_manuel['entree']"/>
+                            </td>
+                            <td class="text-center">
+                                <span t-esc="pointage_manuel['sortie_pause']"/>
+                            </td>
+                            <td class="text-center">
+                                <span t-esc="pointage_manuel['retour_pause']"/>
+                            </td>
+                            <td class="text-center">
+                                <span t-esc="pointage_manuel['sortie']"/>
+                            </td>
+                            <td class="text-center">
+                                <span 
+                                    t-esc="pointage_manuel['presence']"
+                                    t-options='{"widget":"float_time"}'
+                                />
+                            </td>
+                            <td class="text-center" style="color: #FFFFFF;background-color: #DC6965;">
+                                <t t-if="pointage_manuel['entry_delay'] > 0">
+                                    <span 
+                                        t-esc="pointage_manuel['entry_delay']"
+                                        t-options='{"widget":"float_time"}'
+                                    />
+                                </t>
+                            </td>
+                            <td class="text-center">
+                                <span t-esc="pointage_manuel['observation']"/>
+                            </td>
+                        </t>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </t>
+</template>
+
+
+<template id="report_hrpresence">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="hr_pointage.report_hrpresence_document"/>
+        </t>
+    </t>
+</template>
+
+
+</odoo>

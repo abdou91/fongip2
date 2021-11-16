@@ -1,0 +1,64 @@
+<odoo>
+    <data>
+
+        <!-- Holidays Status -->
+        <record id="view_holidays_status_form_inherit" model="ir.ui.view">
+            <field name="name">holidays.status.form.inherit</field>
+            <field name="model">hr.leave.type</field>
+            <field name="priority">1</field>
+            <field name="inherit_id" ref="hr_holidays.edit_holiday_status_form"/>
+            <field name="arch" type="xml">
+                <field name="validation_type" widget="radio" position ="after">
+                  <field name="delai_soumission" />
+                </field>
+            </field>
+        </record>
+        
+        <record id="view_holidays_leave_form_inherit" model="ir.ui.view">
+            <field name="name">holidays.leave.form.inherit</field>
+            <field name="model">hr.leave</field>
+            <field name="inherit_id" ref="hr_holidays.hr_leave_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='department_id']" position="after">
+                    <field name='user_to_validate' readonly="1"/>
+                    <field name='sms_ref' readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_holidays_leave_form_manager_inherit" model="ir.ui.view">
+            <field name="name">holidays.leave.form.manager.inherit</field>
+            <field name="model">hr.leave</field>
+            <field name="inherit_id" ref="hr_holidays.hr_leave_view_form_manager"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='department_id']" position="after">
+                    <field name='user_to_validate' readonly="1"/>
+                    <field name='sms_ref' readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="hr_holidays_status_validators_leave_create_inherit" model="ir.ui.view">
+            <field name="name">hr.holidays.double.validation.create.leave.inherit</field>
+            <field name="model">hr.leave</field>
+            <field 
+                name="inherit_id" 
+                ref="ohrms_holidays_approval.hr_holidays_status_validators_leave_create"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree/field[@name='validating_users']" position="before">
+                    <field name="ordre_validation"/>                
+                </xpath>
+            </field>
+        </record>
+        <record id="hr_holidays_status_validators_inherit" model="ir.ui.view">
+            <field name="name">hr.holidays.double.validation.inherit</field>
+            <field name="model">hr.leave</field>
+            <field 
+                name="inherit_id" 
+                ref="ohrms_holidays_approval.hr_holidays_status_validators"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree/field[@name='validating_users']" position="before">
+                    <field name="ordre_validation"/>                
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ir_cron_scheduler_compute_public_holidays" model="ir.cron">
+        <field name="name">scheduler_compute_public_holidays</field>
+        <field name="active">false</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="model_id" ref="model_hr_holidays_public"/>
+        <field name="code">model.scheduler_compute_public_holidays()</field>
+        <field name="state">code</field>
+    </record>
+    <record id="ir_cron_sheduler_automatical_validate_holidays" model="ir.cron">
+        <field name="name">sheduler_automatical_validate_holidays</field>
+        <field name="active">false</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="model_id" ref="model_hr_leave"/>
+        <field name="code">model.sheduler_automatical_validate_holidays()</field>
+        <field name="state">code</field>
+    </record>
+    <record id="ir_cron_scheduler_increment_employee_holidays" model="ir.cron">
+        <field name="name">scheduler_increment_employee_holidays</field>
+        <field name="active">false</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">months</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="model_id" ref="model_hr_leave_allocation"/>
+        <field name="code">model.scheduler_increment_employee_holidays()</field>
+        <field name="state">code</field>
+    </record>
+</odoo>

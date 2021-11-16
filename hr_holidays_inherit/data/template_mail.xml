@@ -1,0 +1,403 @@
+<?xml version="1.0"?>
+<odoo>
+    <data noupdate="1">
+        <record id="email_template_edi_holidays_permission" model="mail.template">
+            <field name="name">Holidays request 1</field>
+            <field name="email_from">"AIBD Info" &lt;no-reply@aibd.sn&gt;</field>
+            <field name="email_to">${object.user_to_validate.login}</field>
+            <field name="subject">Demande de congé</field>
+            <field name="model_id" ref="hr_holidays_inherit.model_hr_leave"/>
+            <!-- xxxx_ressources_humaines -->
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html">
+                <![CDATA[
+                    <html>
+                        <head></head>
+                        <body style="margin: 0; padding: 0;">
+                            <table border="0" width="100%" cellpadding="0" bgcolor="#ededed"
+                                   style="padding: 20px; background-color: #ededed" summary="o_mail_notification">
+                                <tbody>
+                                    <!-- HEADER -->
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table width="590" border="0" cellpadding="0" bgcolor="#875A7B"
+                                                   style="min-width: 590px; background-color: rgb(221,215,215); padding: 20px;">
+                                                <tr>
+                                                    <td valign="middle">
+                                                        <span style="font-size:20px; color:white; font-weight: bold;">
+
+                                                        </span>
+                                                    </td>
+                                                    <td valign="middle" align="right">
+                                                        <img src="data:image/png;base64,${user.company_id.logo}" style="width: 250px;" />
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    <!-- CONTENT -->
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table width="590" border="0" cellpadding="0" bgcolor="#ffffff"
+                                                   style="min-width: 590px; background-color: rgb(255, 255, 255); padding: 20px;">
+                                                <tbody>
+                                                    <td valign="top"
+                                                        style="font-family:Arial,Helvetica,sans-serif; color: #555; font-size: 14px;">
+                                                        <p>Bonjour,</p>
+                                                        <p><strong>${object.employee_id.name}</strong> a déposé une <strong>demande de congés</strong> pour la période suivante : du <strong>${object.date_from}</strong> au <strong>${object.date_to}</strong> (<strong>${object.number_of_days}</strong>) jour(s) </p>
+                                                        <p>Cliquez <a href="${object.url_redirection}">ici </a> pour approuver ou refuser le congé de <strong>${object.employee_id.name}</strong>.</p>
+
+                                                        <p>Bien à vous,</p>
+
+                                                        <p>Equipe XXXX,</p>
+
+                                                    </td>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    <!-- FOOTER -->
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table width="590" border="0" cellpadding="0" bgcolor="#875A7B"
+                                                   style="min-width: 590px; background-color: rgb(221,215,215); padding: 20px;">
+                                                <tr>
+                                                    <td valign="middle" align="left"
+                                                        style="color: #fff; padding-top: 10px; padding-bottom: 10px; font-size: 12px;">
+                                                        ${user.company_id.name}
+                                                        <br/>
+                                                        ${user.company_id.phone or ''}
+                                                    </td>
+                                                    <td valign="middle" align="right"
+                                                        style="color: #fff; padding-top: 10px; padding-bottom: 10px; font-size: 12px;">
+                                                        % if user.company_id.email:
+                                                        <a href="mailto:${user.company_id.email}"
+                                                           style="text-decoration:none; color: white;">
+                                                            ${user.company_id.email}
+                                                        </a>
+                                                        <br/>
+                                                        % endif
+                                                        % if user.company_id.website:
+                                                        <a href="${user.company_id.website}"
+                                                           style="text-decoration:none; color: white;">
+                                                            ${user.company_id.website}
+                                                        </a>
+                                                        % endif
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center">
+                                            Site web <a href="https://www.xxxx.org">xxxx</a>.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </body>
+                    </html>
+                ]]>
+            </field>
+        </record>
+
+        <record id="email_template_edi_holidays_permission_simple" model="mail.template">
+            <field name="name">Holidays request 2</field>
+            <field name="email_from">"AIBD Info" &lt;no-reply@aibd.sn&gt;</field>
+            <field name="email_to">${object.user_to_validate.login}</field>
+            <field name="subject">Demande de congé</field>
+            <field name="model_id" ref="hr_holidays_inherit.model_hr_leave"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html">
+                <![CDATA[
+                    <html>
+                        <head></head>
+                        <body style="margin: 0; padding: 0;">
+                            <table border="0" width="100%" cellpadding="0" bgcolor="#ededed"
+                                   style="padding: 20px; background-color: #ededed" summary="o_mail_notification">
+                                <tbody>
+                                    <!-- HEADER -->
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table width="590" border="0" cellpadding="0" bgcolor="#875A7B"
+                                                   style="min-width: 590px; background-color: rgb(221,215,215); padding: 20px;">
+                                                <tr>
+                                                    <td valign="middle">
+                                                        <span style="font-size:20px; color:white; font-weight: bold;">
+
+                                                        </span>
+                                                    </td>
+                                                    <td valign="middle" align="right">
+                                                        <img src="https://www.xxxx.org/wp-content/uploads/2018/11/cropped-cropped-unnamed-2-100x41-3.png"
+                                                             style="width: 100px;height: 41px;"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    <!-- CONTENT -->
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table width="590" border="0" cellpadding="0" bgcolor="#ffffff"
+                                                   style="min-width: 590px; background-color: rgb(255, 255, 255); padding: 20px;">
+                                                <tbody>
+                                                    <td valign="top"
+                                                        style="font-family:Arial,Helvetica,sans-serif; color: #555; font-size: 14px;">
+                                                        <p>Bonjour,</p>
+                                                        <p>${object.employee_id.name} a déposé une demande de congés pour la période suivante : du ${object.date_from} au ${object.date_to} (${object.number_of_days}) jour(s) </p>
+                                                        <p>Bien à vous,</p>
+                                                        <p>Equipe Test,</p>
+                                                    </td>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    <!-- FOOTER -->
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table width="590" border="0" cellpadding="0" bgcolor="#875A7B"
+                                                   style="min-width: 590px; background-color: rgb(221,215,215); padding: 20px;">
+                                                <tr>
+                                                    <td valign="middle" align="left"
+                                                        style="color: #fff; padding-top: 10px; padding-bottom: 10px; font-size: 12px;">
+                                                        ${user.company_id.name}
+                                                        <br/>
+                                                        ${user.company_id.phone or ''}
+                                                    </td>
+                                                    <td valign="middle" align="right"
+                                                        style="color: #fff; padding-top: 10px; padding-bottom: 10px; font-size: 12px;">
+                                                        % if user.company_id.email:
+                                                        <a href="mailto:${user.company_id.email}"
+                                                           style="text-decoration:none; color: white;">
+                                                            ${user.company_id.email}
+                                                        </a>
+                                                        <br/>
+                                                        % endif
+                                                        % if user.company_id.website:
+                                                        <a href="${user.company_id.website}"
+                                                           style="text-decoration:none; color: white;">
+                                                            ${user.company_id.website}
+                                                        </a>
+                                                        % endif
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center">
+                                            Site web <a href="https://www.xxxx.org">xxxx</a>.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </body>
+                    </html>
+                ]]>
+
+            </field>
+        </record>
+
+        <!--Acceptation de la demande de congé-->
+        <record id="email_template_edi_holidays" model="mail.template">
+            <field name="name">Holidays Approval</field>
+            <field name="email_from">"AIBD Info" &lt;no-reply@aibd.sn&gt;</field>
+            <field name="email_to">${object.employee_id.work_email}</field>
+            <field name="subject">Demande de congés</field>
+            <field name="model_id" ref="hr_holidays_inherit.model_hr_leave"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html">
+                <![CDATA[
+                    <html>
+                        <head></head>
+                        <body style="margin: 0; padding: 0;">
+                            <table border="0" width="100%" cellpadding="0" bgcolor="#ededed"
+                                   style="padding: 20px; background-color: #ededed" summary="o_mail_notification">
+                                <tbody>
+                                    <!-- HEADER -->
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table width="590" border="0" cellpadding="0" bgcolor="#875A7B"
+                                                   style="min-width: 590px; background-color: rgb(221,215,215); padding: 20px;">
+                                                <tr>
+                                                    <td valign="middle">
+                                                        <span style="font-size:20px; color:white; font-weight: bold;">
+
+                                                        </span>
+                                                    </td>
+                                                    <td valign="middle" align="right">
+                                                        
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    <!-- CONTENT -->
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table width="590" border="0" cellpadding="0" bgcolor="#ffffff"
+                                                   style="min-width: 590px; background-color: rgb(255, 255, 255); padding: 20px;">
+                                                <tbody>
+                                                    <td valign="top"
+                                                        style="font-family:Arial,Helvetica,sans-serif; color: #555; font-size: 14px;">
+                                                        <p>Bonjour ${object.employee_id.name},</p>
+                                                        <p>Votre demande de congés a été acceptée ! Bonnes vacances.</p>
+                                                        <p>Bien à vous,</p>
+                                                        <p>Equipe AIBD,</p>
+                                                    </td>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    <!-- FOOTER -->
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table width="590" border="0" cellpadding="0" bgcolor="#875A7B"
+                                                   style="min-width: 590px; background-color: rgb(221,215,215); padding: 20px;">
+                                                <tr>
+                                                    <td valign="middle" align="left"
+                                                        style="color: #fff; padding-top: 10px; padding-bottom: 10px; font-size: 12px;">
+                                                        ${user.company_id.name}
+                                                        <br/>
+                                                        ${user.company_id.phone or ''}
+                                                    </td>
+                                                    <td valign="middle" align="right"
+                                                        style="color: #fff; padding-top: 10px; padding-bottom: 10px; font-size: 12px;">
+                                                        % if user.company_id.email:
+                                                        <a href="mailto:${user.company_id.email}"
+                                                           style="text-decoration:none; color: white;">
+                                                            ${user.company_id.email}
+                                                        </a>
+                                                        <br/>
+                                                        % endif
+                                                        % if user.company_id.website:
+                                                        <a href="${user.company_id.website}"
+                                                           style="text-decoration:none; color: white;">
+                                                            ${user.company_id.website}
+                                                        </a>
+                                                        % endif
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center">
+                                            Site web <a href="https://www.xxxx.org">xxxx</a>.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </body>
+                    </html>
+                ]]>
+
+            </field>
+        </record>
+
+        <!--Refu du demande de congé-->
+        <record id="email_template_edi_holidays_refuse" model="mail.template">
+            <field name="name">Holidays Refusal</field>
+            <field name="email_from">"AIBD Info" &lt;no-reply@aibd.sn&gt;</field>
+            <field name="email_to">${object.employee_id.work_email}</field>
+            <field name="subject">Demande de congés refusée</field>
+            <field name="model_id" ref="hr_holidays_inherit.model_hr_leave"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html">
+                <![CDATA[
+                    <html>
+                        <head></head>
+                        <body style="margin: 0; padding: 0;">
+                            <table border="0" width="100%" cellpadding="0" bgcolor="#ededed"
+                                   style="padding: 20px; background-color: #ededed" summary="o_mail_notification">
+                                <tbody>
+                                    <!-- HEADER -->
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table width="590" border="0" cellpadding="0" bgcolor="#875A7B"
+                                                   style="min-width: 590px; background-color: rgb(221,215,215); padding: 20px;">
+                                                <tr>
+                                                    <td valign="middle">
+                                                        <span style="font-size:20px; color:white; font-weight: bold;">
+
+                                                        </span>
+                                                    </td>
+                                                    <td valign="middle" align="right">
+                                                        
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    <!-- CONTENT -->
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table width="590" border="0" cellpadding="0" bgcolor="#ffffff"
+                                                   style="min-width: 590px; background-color: rgb(255, 255, 255); padding: 20px;">
+                                                <tbody>
+                                                    <td valign="top"
+                                                        style="font-family:Arial,Helvetica,sans-serif; color: #555; font-size: 14px;">
+                                                        <p>Bonjour: ${object.employee_id.name},</p>
+                                                        <p>Ta demande de congés a malheureusement été refusée. Parles en avec le référent de ton pôle pour comprendre pourquoi et pour replanifier tes congés.</p>
+                                                        <p>Bien à vous,</p>
+                                                        <p>Equipe xxxx,</p>
+                                                    </td>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+
+                                    <!-- FOOTER -->
+                                    <tr>
+                                        <td align="center" style="min-width: 590px;">
+                                            <table width="590" border="0" cellpadding="0" bgcolor="#875A7B"
+                                                   style="min-width: 590px; background-color: rgb(221,215,215); padding: 20px;">
+                                                <tr>
+                                                    <td valign="middle" align="left"
+                                                        style="color: #fff; padding-top: 10px; padding-bottom: 10px; font-size: 12px;">
+                                                        ${user.company_id.name}
+                                                        <br/>
+                                                        ${user.company_id.phone or ''}
+                                                    </td>
+                                                    <td valign="middle" align="right"
+                                                        style="color: #fff; padding-top: 10px; padding-bottom: 10px; font-size: 12px;">
+                                                        % if user.company_id.email:
+                                                        <a href="mailto:${user.company_id.email}"
+                                                           style="text-decoration:none; color: white;">
+                                                            ${user.company_id.email}
+                                                        </a>
+                                                        <br/>
+                                                        % endif
+                                                        % if user.company_id.website:
+                                                        <a href="${user.company_id.website}"
+                                                           style="text-decoration:none; color: white;">
+                                                            ${user.company_id.website}
+                                                        </a>
+                                                        % endif
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center">
+                                            Site web <a href="https://www.xxxx.org">xxxx</a>.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </body>
+                    </html>
+                ]]>
+            </field>
+        </record>
+
+    </data>
+</odoo>

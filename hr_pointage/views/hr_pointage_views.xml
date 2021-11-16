@@ -1,0 +1,500 @@
+<odoo>
+    <data>
+    <!-- Public employee -->
+    <record id="hr_employee_public_form_view_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.public.leave.form.inherit</field>
+        <field name="model">hr.employee.public</field>
+        <field name="inherit_id" ref="hr.hr_employee_public_view_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button>
+                    <field name="hourly_rate" widget="percentpie"/>
+                </button>
+            </div>
+            <field name="parent_id" position ="after">
+              <field name="type_employee" />
+            </field>
+            <field name="work_location" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </field>
+            <!-- <field name="address_id" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </field> -->
+            <field name="address_id" position="after">
+                <field name="agence" widget="selection"/>
+                <field name="matricule"/>
+                <field name="matricule_pointage"/>
+            </field>
+            <notebook position="inside">
+                <page string="Vaccination Covid19">
+                    <group>
+                        <field name="vaccination_covid19" readonly="1"/>
+                        <field name="vaccination" readonly="1"/>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+    <record id="hr_employee_public_view_search" model="ir.ui.view">
+        <field name="name">hr.employee.public.search</field>
+        <field name="model">hr.employee.public</field>
+        <field name="inherit_id" ref="hr.hr_employee_public_view_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="hourly_rate" widget="percentpie"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_employee_public_tree_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.public.tree.inherit</field>
+        <field name="model">hr.employee.public</field>
+        <field name="inherit_id" ref="hr.hr_employee_public_view_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree/field[@name='coach_id']" position="after">
+                <button 
+                    name="pointage_entree" 
+                    type="object"
+                    string="Entrée"
+                    class="oe_highlight"
+                    groups="hr_pointage.group_securite,hr_pointage.group_drh,hr_pointage.group_ag"
+                />
+                <button 
+                    name="pointage_sortie_pause" 
+                    type="object"
+                    string="Sortie Pause"
+                    class="btn-danger"
+                    groups="hr_pointage.group_securite,hr_pointage.group_drh,hr_pointage.group_ag"
+                />
+                <button 
+                    name="pointage_retour_pause" 
+                    type="object"
+                    string="Retour Pause"
+                    class="oe_highlight"
+                    groups="hr_pointage.group_securite,hr_pointage.group_drh,hr_pointage.group_ag"
+                />
+                <button 
+                    name="pointage_sortie" 
+                    type="object"
+                    string="Sortie"
+                    class="btn-danger"
+                    groups="hr_pointage.group_securite,hr_pointage.group_drh,hr_pointage.group_ag"
+                />
+            </xpath>
+        </field>
+    </record>
+    <record id="hr_employee_public_view_filter_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.public.search.inherit</field>
+        <field name="model">hr.employee.public</field>
+        <field name="inherit_id" ref="hr.hr_employee_public_view_search"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="type_employee" />
+            </field>
+            <filter name="group_department" position="after" >
+                <filter name="group_type_employee" string="Type" domain="[]" context="{'group_by': 'type_employee'}"/>
+            </filter>
+            <field name="department_id" position="before" >
+                <field name="type_employee" icon="fa-users"/>
+            </field>
+         </field>
+    </record>
+    <record id="hr.hr_employee_public_action" model="ir.actions.act_window">
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+    <!-- Employee -->
+    <record id="view_hr_employee_form" model="ir.ui.view">
+        <field name="name">hr.employee.inherit.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button id="hr_vaccination_button">
+                    <div role="img" class="fa fa-fw fa-circle text-covid19 o_button_icon" attrs="{'invisible': [('vaccination_covid19', '=', False)]}" aria-label="Vacciné" title="Vacciné"/>
+                    <div role="img" class="fa fa-fw fa-circle text-danger o_button_icon" attrs="{'invisible': [('vaccination_covid19', '=', True)]}" aria-label="Non vacciné" title="Non vacciné"/>
+                </button>
+                <button>
+                    <field name="hourly_rate" widget="percentpie"/>
+                </button>
+            </div>
+           <field name="job_id" position ="after">
+              <field name="type_employee" />
+           </field>
+           <field name="work_location" position="attributes">
+                <attribute name="invisible">True</attribute>
+           </field>
+           <!-- <field name="address_id" position="attributes">
+                <attribute name="invisible">True</attribute>
+           </field> -->
+           <field name="address_id" position="after">
+                <field name="agence" widget="selection"/>
+                <field name="matricule"/>
+                <field name="matricule_pointage"/>
+           </field>
+           <notebook position="inside">
+                <page string="Vaccination Covid19">
+                    <group>
+                        <field name="vaccination_covid19"/>
+                        <field name="vaccination"/>
+                    </group>
+                </page>
+            </notebook> 
+        </field>
+    </record>
+
+    <record id="hr_kanban_view_employees" model="ir.ui.view">
+        <field name="name">hr_kanban_view_employees</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.hr_kanban_view_employees"/>
+        <field name="arch" type="xml">
+            <field name="id" position="after">
+                <field name="vaccination_covid19"/>
+            </field>
+            <xpath expr="//field[@name='name']" position="before">
+                <div class="oe_inline">
+                    <field name="hourly_rate" widget="percentpie"/>
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="after">
+                <span class="fa fa-circle text-covid19" t-if="record.vaccination_covid19.raw_value" role="img" aria-label="Vacciné" title="Vacciné" name="vaccinated"/>
+                <span class="fa fa-circle text-danger" t-if="!record.vaccination_covid19.raw_value" role="img" aria-label="Non vacciné" title="Non vacciné" name="not_vaccinated"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_employee_tree_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.tree.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree/field[@name='coach_id']" position="after">
+                <button 
+                    name="pointage_entree" 
+                    type="object"
+                    string="Entrée"
+                    class="oe_highlight"
+                    groups="hr_pointage.group_securite,hr_pointage.group_drh,hr_pointage.group_ag"
+                />
+                <button 
+                    name="pointage_sortie_pause" 
+                    type="object"
+                    string="Sortie Pause"
+                    class="btn-danger"
+                    groups="hr_pointage.group_securite,hr_pointage.group_drh,hr_pointage.group_ag"
+                />
+                <button 
+                    name="pointage_retour_pause" 
+                    type="object"
+                    string="Retour Pause"
+                    class="oe_highlight"
+                    groups="hr_pointage.group_securite,hr_pointage.group_drh,hr_pointage.group_ag"
+                />
+                <button 
+                    name="pointage_sortie" 
+                    type="object"
+                    string="Sortie"
+                    class="btn-danger"
+                    groups="hr_pointage.group_securite,hr_pointage.group_drh,hr_pointage.group_ag"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_employee_filter_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.search.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_filter"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="type_employee" />
+            </field>
+            <filter name="group_department" position="after" >
+                <filter name="group_type_employee" string="Type" domain="[]" context="{'group_by': 'type_employee'}"/>
+            </filter>
+            <field name="department_id" position="before" >
+                <field name="type_employee" icon="fa-users"/>
+            </field>
+         </field>
+    </record>
+
+    <record id="hr.open_view_employee_list_my" model="ir.actions.act_window">
+        <field name="view_mode">kanban,tree,form,activity</field>
+    </record>
+
+    <!-- pointage -->
+    <record id="view_historiques_pointages_tree" model="ir.ui.view">
+        <field name="name">pointage.manuel.tree</field>
+        <field name="model">pointage.manuel</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <field name="employee"/>
+                <field name="type_pointage"/>
+                <field name="date_pointage"/>
+                <field name="heure_pointage"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="action_hr_pointage_manuel_liste" model="ir.actions.act_window">
+        <field name="name">Liste des Pointages manuels</field>
+        <field name="res_model">pointage.manuel</field>
+        <field name='view_mode'>tree</field>
+        <field name="context">{'search_default_current_week': 1}</field>
+        <field name="view_id" ref="view_historiques_pointages_tree"/>
+        <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+        </p>
+        </field>
+    </record>
+
+    <record id="action_hr_mes_pointage_manuel_liste" model="ir.actions.act_window">
+        <field name="name">Liste de mes Pointages manuels</field>
+        <field name="res_model">pointage.manuel</field>
+        <field name='view_mode'>tree</field>
+        <field name="domain">[('employee.user_id','=',uid)]</field>
+        <field name="context">{'search_default_current_week': 1}</field>
+        <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+        </p>
+        </field>
+    </record>
+
+
+    <record id="view_pointage_filter" model="ir.ui.view">
+        <field name="name">pointage.manuel.search</field>
+        <field name="model">pointage.manuel</field>
+        <field name="arch" type="xml">
+            <search string="Pointage">
+                <field name="employee" string="Employés"/>
+                <filter string="Cette Semaine" name="current_week"
+                    domain="[('date_pointage', '&lt;=', ((context_today()+relativedelta(weeks=0, weekday=-1)).strftime('%Y-%m-%d'))), ('date_pointage', '&gt;=', ((context_today()-relativedelta(weeks=1, weekday=0)).strftime('%Y-%m-%d')))]"/>
+                <filter string="Mois en cours" name="current_month" domain="[('date_pointage','&lt;',(context_today()+relativedelta(months=1)).strftime('%%Y-%%m-01')), ('date_pointage','&gt;=',time.strftime('%%Y-%%m-01'))]"/>
+                <filter string="Mois précédent" name="prev_month" domain="[('date_pointage','&gt;=',(context_today()-relativedelta(months=1)).strftime('%%Y-%%m-01')),('date_pointage','&lt;',time.strftime('%%Y-%%m-01'))]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_historiques_pointages" model="ir.actions.act_window">
+        <field name="name">Historiques Pointages</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">pointage.manuel</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="context">{'search_default_current_week': 1}</field>
+        <field name="search_view_id" ref="view_pointage_filter"/>
+        <field name="view_id" ref="view_historiques_pointages_tree"/>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to define a new objet.
+          </p>
+        </field>
+    </record>
+
+    <record id="view_historiques_pointages_form" model="ir.ui.view">
+        <field name="name">pointage.manuel.form</field>
+        <field name="model">pointage.manuel</field>
+        <field name="arch" type="xml">
+            <form string="">
+                <sheet>
+                    <group>
+                        <field name="employee" readonly="1"/>
+                        <field name="type_pointage" readonly="1"/>
+                        <field name="date_pointage"/>
+                        <field name="heure_pointage"/>
+                        <field 
+                            name="entry_time" 
+                            widget="float_time"
+                            attrs="{'invisible': [('type_pointage', '=', 'sortie')]}"
+                        />
+                        <field 
+                            name="entry_delay" 
+                            widget="float_time"
+                            attrs="{'invisible': [('type_pointage', '=', 'sortie')]}"
+                        />
+                        <field 
+                            name="exit_time" 
+                            widget="float_time"
+                            invisible="1"
+                        />
+                        <field 
+                            name="exit_delay" 
+                            widget="float_time"
+                            invisible="1"
+                        />
+                        <field name="date_heure" invisible="1"/>
+                        <field name="presence_id" invisible="1"/>
+                        <field name="is_admin" invisible="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <record id="view_historiques_pointages_kanban" model="ir.ui.view">
+        <field name="name">pointage.manuel.kanban</field>
+        <field name="model">pointage.manuel</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div>
+                            <strong>
+                                ID: <a type="open"><field name="id" /></a>
+                            <ul>
+                                <li>Employee: <field name="employee" /></li>
+                                <li>Type pointage: <field name="type_pointage" /></li>
+                                <li>Date pointage: <field name="date_pointage" /></li>
+                                <li>Heure pointage: <field name="heure_pointage" /></li>
+                            </ul>
+                            </strong>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Agences -->
+    <record id="action_agences" model="ir.actions.act_window">
+        <field name="name">Agences</field>
+        <field name="res_model">hr.agence</field>
+        <field name='view_mode'>tree,form</field>
+        <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+           Cliquez pour enregistrer une nouvelle agence.
+        </p>
+        </field>
+    </record>
+
+    <!-- Presence -->
+    <record id="action_liste_presence" model="ir.actions.act_window">
+            <field name="name">Presence</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.presence</field>
+            <field name="search_view_id" eval="False"/>
+            <field name="view_id" eval="False"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+              </p>
+            </field>
+    </record>
+
+    <!-- Presence form -->
+    <record id="view_liste_presence_form" model="ir.ui.view">
+        <field name="name">hr.presence.form</field>
+        <field name="model">hr.presence</field>
+        <field name="arch" type="xml">
+            <form string="Presence">
+                <header>
+                    <button 
+                        string="Envoyer Presence"
+                        name="action_send_presence" 
+                        type="object"
+                        class="oe_highlight"
+                        groups="hr.group_hr_user,base.group_user"
+                    />
+                    <button 
+                        string="Imprimer Presence"
+                        name="action_print_presence" 
+                        type="object"
+                        class="oe_highlight"
+                        groups="hr.group_hr_user,base.group_user"
+                    />
+                </header>
+                <sheet>
+                    <group>
+                        <field name="current_user" invisible="1"/>
+                        <field name="employee" readonly="1"/>
+                    </group>
+                    <group>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                        <field name="hide_diff_presence" invisible="1"/>
+                        <field name="diff_presence" widget="float_time" attrs="{'invisible': [('hide_diff_presence', '=', 'NODISPLAY')]}"/>
+                        <field name="horaire_a_faire" widget="float_time" attrs="{'invisible': [('hide_diff_presence', '=', 'NODISPLAY')]}"/>
+                    </group>
+                    <notebook>
+                        <page string="Liste pointages">
+                            <field name="pointage_manuel_ids">
+                                <form>
+                                    <group>
+                                        <field name="employee" />
+                                        <field name="type_pointage"/>
+                                        <field name="date_heure"/>
+                                        <field name="date_heure"/>
+                                    </group>
+                                </form>
+                                <tree >
+                                    <field name="employee"/>
+                                    <field name="type_pointage"/>
+                                    <field name="date_heure"/>
+                                </tree>
+                            </field>
+                        </page>    
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Presence Tree -->
+    <record id="view_liste_presence_tree" model="ir.ui.view">
+        <field name="name">hr.presence.form</field>
+        <field name="model">hr.presence</field>
+        <field name="arch" type="xml">
+            <tree string="Presences">
+                <field name="employee"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_employee_readonly" model="ir.ui.view">
+        <field name="name">hr.presence.form</field>
+        <field name="model">hr.presence</field>
+        <field name="inherit_id" ref="view_liste_presence_form" />
+        <field name="groups_id" eval="[(6, 0, [ref('hr.group_hr_manager')])]"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='employee']" position="attributes">
+                <attribute name="readonly">False</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <menuitem
+        name="Pointages"
+        id="menu_hr_pointages"
+        parent="hr.menu_hr_root"
+        sequence="5"
+        groups="hr.group_hr_user"
+        />
+    <menuitem 
+        name="Presence" 
+        id="menu_liste_presence" 
+        parent="hr.menu_hr_root" 
+        action="action_liste_presence"
+        sequence='6'
+        />
+    <menuitem
+        name="Mes Pointages manuels"
+        id='menu_hr_mes_pointage_manuel_liste'
+        parent='menu_hr_pointages'
+        action='action_hr_mes_pointage_manuel_liste'
+        groups="hr.group_hr_user" 
+        sequence="6"
+        />
+    <menuitem
+        name="Historiques Pointages" 
+        id="menu_historiques_pointages" 
+        parent="menu_hr_pointages" 
+        action="action_historiques_pointages"
+        sequence='60'
+        groups="hr.group_hr_user,hr.group_hr_manager,hr_pointage.group_securite,hr_pointage.group_drh,hr_pointage.group_ag"
+        />
+    <menuitem
+        name='Agences'
+        id='menu_agences'
+        action='action_agences'
+        parent='hr.menu_human_resources_configuration'
+        sequence='80'/>           
+    </data>
+</odoo>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="hr_holidays.holiday_status_cl" model="hr.leave.type">
+            <field name="name">Paid Time Off</field>
+            <field name="category">paid</field>
+            <field name="allocation_type">fixed</field>
+            <field name="validation_type">both</field>
+            <field name="color_name">black</field>
+            <field name="leave_notif_subtype_id" eval="ref('hr_holidays.mt_leave')"/>
+            <field name="allocation_notif_subtype_id" eval="ref('hr_holidays.mt_leave_allocation')"/>
+            <field name="validity_start" eval="time.strftime('%Y-%m-01')"/>
+            <field name="responsible_id" ref="base.user_admin"/>
+        </record>
+
+         <!--Sick leave-->
+        <record id="hr_holidays.holiday_status_sl" model="hr.leave.type">
+            <field name="name">Sick Time Off</field>
+            <field name="category">disease</field>
+            <field name="allocation_type">no</field>
+            <field name="color_name">red</field>
+            <field name="validity_start" eval="time.strftime('%Y-01-01')"/>
+            <field name="leave_notif_subtype_id" eval="ref('hr_holidays.mt_leave_sick')"/>
+            <field name="responsible_id" ref="base.user_admin"/>
+        </record>
+
+        <!--&lt;!&ndash; Compensatory Days &ndash;&gt;-->
+        <record id="hr_holidays.holiday_status_comp" model="hr.leave.type">
+            <field name="name">Compensatory Days</field>
+            <field name="category">compensation</field>
+            <field name="allocation_type">fixed_allocation</field>
+            <field name="validation_type">both</field>
+            <field name="request_unit">hour</field>
+            <field name="color_name">lavender</field>
+            <field name="validity_start" eval="False"/>
+            <field name="leave_notif_subtype_id" eval="ref('hr_holidays.mt_leave')"/>
+            <field name="responsible_id" ref="base.user_admin"/>
+        </record>
+
+        <!--&lt;!&ndash;Unpaid Leave &ndash;&gt;-->
+        <record id="hr_holidays.holiday_status_unpaid" model="hr.leave.type">
+            <field name="name">Congé sans solde</field>
+            <field name="category">unpaid</field>
+            <field name="allocation_type">no</field>
+            <field name="validation_type">both</field>
+            <field name="color_name">brown</field>
+            <field name="request_unit">hour</field>
+            <field name="unpaid" eval="True"/>
+            <field name="validity_start" eval="time.strftime('%Y-01-01')"/>
+            <field name="leave_notif_subtype_id" eval="ref('hr_holidays.mt_leave_unpaid')"/>
+            <field name="responsible_id" ref="base.user_admin"/>
+        </record>
+
+        <record id="holiday_status_married" model="hr.leave.type">
+            <field name="name">Mariage du travailleur</field>
+            <field name="category">wedding</field>
+            <field name="allocation_type">no</field>
+            <field name="nbre_de_jours">3</field>
+            <field name="validation_type">manager</field>
+            <field name="color_name">magenta</field>
+            <field name="request_unit">day</field>
+            <field name="validity_start" eval="time.strftime('%Y-01-01')"/>
+            <!--<field name="leave_notif_subtype_id" eval="ref('mt_leave')"/>-->
+            <field name="responsible_id" ref="base.user_admin"/>
+        </record>
+
+        <record id="holiday_status_early" model="hr.leave.type">
+            <field name="name">Congé anticipé</field>
+            <field name="category">anticipated</field>
+            <field name="allocation_type">no</field>
+            <field name="validation_type">manager</field>
+            <field name="color_name">magenta</field>
+            <field name="request_unit">day</field>
+            <field name="validity_start" eval="time.strftime('%Y-01-01')"/>
+            <field name="responsible_id" ref="base.user_admin"/>
+        </record>
+        <!---->
+        <record id="holiday_status_loved_one" model="hr.leave.type">
+            <field name="name">Mariage d'un proche</field>
+            <field name="category">wedding</field>
+            <field name="allocation_type">no</field>
+            <field name="nbre_de_jours">1</field>
+            <field name="validation_type">manager</field>
+            <field name="color_name">magenta</field>
+            <field name="request_unit">day</field>
+            <field name="validity_start" eval="time.strftime('%Y-01-01')"/>
+            <field name="responsible_id" ref="base.user_admin"/>
+        </record>
+        <!---->
+        <record id="holiday_status_family_event" model="hr.leave.type">
+            <field name="name">Naissance, Baptême, Communion</field>
+            <field name="category">birth</field>
+            <field name="allocation_type">no</field>
+            <field name="nbre_de_jours">1</field>
+            <field name="validation_type">manager</field>
+            <field name="color_name">magenta</field>
+            <field name="request_unit">day</field>
+            <field name="validity_start" eval="time.strftime('%Y-01-01')"/>
+            <field name="responsible_id" ref="base.user_admin"/>
+        </record>
+        <!---->
+        <record id="holiday_status_death_spouse_child" model="hr.leave.type">
+            <field name="name">Décés d'un conjoint, enfant</field>
+            <field name="category">death</field>
+            <field name="allocation_type">no</field>
+            <field name="nbre_de_jours">4</field>
+            <field name="validation_type">manager</field>
+            <field name="color_name">magenta</field>
+            <field name="request_unit">day</field>
+            <field name="validity_start" eval="time.strftime('%Y-01-01')"/>
+            <field name="responsible_id" ref="base.user_admin"/>
+        </record>
+        <!---->
+        <record id="holiday_status_death_loved_one" model="hr.leave.type">
+            <field name="name">Décés d'un proche</field>
+            <field name="category">death</field>
+            <field name="allocation_type">no</field>
+            <field name="nbre_de_jours">2</field>
+            <field name="validation_type">manager</field>
+            <field name="color_name">magenta</field>
+            <field name="request_unit">day</field>
+            <field name="validity_start" eval="time.strftime('%Y-01-01')"/>
+            <field name="responsible_id" ref="base.user_admin"/>
+        </record>
+
+    </data>
+</odoo>

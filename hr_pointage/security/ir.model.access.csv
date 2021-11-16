@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_agence,hr_agence,model_hr_agence,,1,1,1,1
+access_hr_presence,hr_presence,model_hr_presence,,1,1,1,1
+access_pointage_manuel,pointage_manuel,model_pointage_manuel,,1,1,1,1
+access_hr_horaire,hr_horaire,model_hr_horaire,,1,1,1,1
+access_hr_absence,hr_absence,model_hr_absence,,1,1,1,1
+access_hr_absence_line,hr_absence_line,model_hr_absence_line,,1,1,1,1

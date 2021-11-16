@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ir_cron_send_mail_working_week" model="ir.cron">
+        <field name="name">send_mail_working_week_statistique</field>
+        <field name="active">false</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">weeks</field>
+        <field name="numbercall">-1</field>
+        <field name="nextcall" eval="(DateTime.now().replace(hour=18, minute=0) - timedelta(days=DateTime.now().weekday(), weeks=1) + timedelta(days=4)).strftime('%Y-%m-%d %H:%M:%S')" />
+        <field name="doall" eval="False"/>
+        <field name="model_id" ref="model_hr_employee"/>
+        <field name="code">model.scheduler_send_mail_working_week_statistique()</field>
+        <field name="state">code</field>
+    </record>
+    <record id="ir_cron_send_mail_working_month" model="ir.cron">
+        <field name="name">send_mail_working_month_statistique</field>
+        <field name="active">false</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">months</field>
+        <field name="numbercall">-1</field>
+        <field name="nextcall" eval="(DateTime.now().replace(hour=18, minute=0) - timedelta(days=DateTime.now().weekday(), weeks=1) + timedelta(days=4)).strftime('%Y-%m-%d %H:%M:%S')" />
+        <field name="doall" eval="False"/>
+        <field name="model_id" ref="model_hr_employee"/>
+        <field name="code">model.scheduler_send_mail_working_month_statistique()</field>
+        <field name="state">code</field>
+    </record>
+    <record id="ir_cron_chargement_donnees_test_pointage" model="ir.cron">
+        <field name="name">chargement_donnees_test_pointage</field>
+        <field name="active">false</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">months</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="model_id" ref="model_hr_presence"/>
+        <field name="code">model.chargement_donnees_test_pointage()</field>
+        <field name="state">code</field>
+    </record>
+    <record id="ir_cron_sheduler_compute_hourly_rate_employee" model="ir.cron">
+        <field name="name">sheduler_compute_hourly_rate_employee</field>
+        <field name="active">false</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="model_id" ref="model_hr_employee"/>
+        <field name="code">model.sheduler_compute_hourly_rate_employee()</field>
+        <field name="state">code</field>
+    </record>
+</odoo>
