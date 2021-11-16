@@ -29,10 +29,10 @@
         'views/views.xml',
         #'views/templates.xml',
         'data/convention_type.xml',
-        'report/contract_template.xml',
-        'report/contracts_report.xml',
-        'data/mail_template.xml',
-        'data/cron.xml',
+        #'report/contract_template.xml',
+        #'report/contracts_report.xml',
+        #'data/mail_template.xml',
+        #'data/cron.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

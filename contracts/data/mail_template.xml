@@ -2,7 +2,7 @@
 <odoo>
     <data noupdate="1">
 
-        <record id="email_template_end_contract" model="mail.template">
+        <!--record id="email_template_end_contract" model="mail.template">
         <field name="name">Contrats - Send by Email</field>
         <field name="email_from">"FONGIP Info" &lt;no-reply@fongip.sn&gt;</field>
         <field name="email_to">abdou.ly.sn</field>
@@ -17,7 +17,7 @@
 <p>Bonjour Madame le chef de la cellule juridique,
     Voudriez vous bien trouver, en pièce jointe, la liste des contrats de partenariat à terme.</p>
 ]]></field>
-        </record>
+        </record-->
 
     </data>
 </odoo>
