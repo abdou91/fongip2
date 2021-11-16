@@ -185,10 +185,10 @@ class FinancingRequestImport(models.Model):
             dicos.append(dict(zip(columns, liste[i])))
         for i in range(len(dicos)):
             for key in dicos[i]:
-                if 'transmission_date' == key and dicos[i][key]:
+                """if 'transmission_date' == key and dicos[i][key]:
                     dicos[i][key] = excel_utility.convert_excel_date_to_python_date(dicos[i][key])
                 if 'imputation_date' == key and dicos[i][key]:
-                    dicos[i][key] = excel_utility.convert_excel_date_to_python_date(dicos[i][key])
+                    dicos[i][key] = excel_utility.convert_excel_date_to_python_date(dicos[i][key])"""
                 if 'reception_mode' == key and dicos[i][key]:
                     reception_mode = dicos[i][key]
                     if reception_mode.strip().lower() == "dossier électronique":
