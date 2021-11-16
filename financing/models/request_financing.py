@@ -103,21 +103,23 @@ class FinancingRequestImport(models.Model):
                             else:
                                 legal_status = self.env['legal.status'].create({'name':request_line.legal_status_name,'description':request_line.legal_status_name})
                                 company_dico['legal_status_id'] = legal_status.id
-                            filiere = self.env['financing.filiere'].search([('name','=',request_line.sector_name)],limit=1)
-                            if filiere:
-                                company_dico['filiere_id'] = filiere.id
-                                company_dico['activity_sector_id'] = filiere.activity_sector_id.id
-                            else:
-                                activity_sector = self.env['activity.sector'].search([('name','=',request_line.activity_sector_name)],limit=1)
-                                if activity_sector:
-                                    company_dico['activity_sector_id'] = activity_sector.id
-                                    filiere = self.env['financing.filiere'].create({'name':request_line.sector_name,'activity_sector_id':activity_sector.id})
+                            if request_line.sector_name:
+                                filiere = self.env['financing.filiere'].search([('name','=',request_line.sector_name)],limit=1)
+                                if filiere:
                                     company_dico['filiere_id'] = filiere.id
+                                    company_dico['activity_sector_id'] = filiere.activity_sector_id.id
                                 else:
-                                    activity_sector = self.env['activity.sector'].create({'name':request_line.activity_sector_name})
-                                    filiere = self.env['financing.filiere'].create({'name':request_line.sector_name,'activity_sector_id':activity_sector.id})
-                                    company_dico['filiere_id'] = filiere.id
-                                    company_dico['activity_sector_id'] = activity_sector.id
+                                    if request_line.activity_sector_name:
+                                        activity_sector = self.env['activity.sector'].search([('name','=',request_line.activity_sector_name)],limit=1)
+                                        if activity_sector:
+                                            company_dico['activity_sector_id'] = activity_sector.id
+                                            filiere = self.env['financing.filiere'].create({'name':request_line.sector_name,'activity_sector_id':activity_sector.id})
+                                            company_dico['filiere_id'] = filiere.id
+                                        else:
+                                            activity_sector = self.env['activity.sector'].create({'name':request_line.activity_sector_name})
+                                            filiere = self.env['financing.filiere'].create({'name':request_line.sector_name,'activity_sector_id':activity_sector.id})
+                                            company_dico['filiere_id'] = filiere.id
+                                            company_dico['activity_sector_id'] = activity_sector.id
                             #region
                             region = self.env['res.country.region'].search([('name','=',request_line.region_name)],limit=1)
                             if region:
