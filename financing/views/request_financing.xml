@@ -23,6 +23,8 @@
                 <field name="quotite"/>
                 <field name="guarantee_amount" options="{'currency_field': 'currency_id'}"/>
                 <field name="number_of_job"/>
+                <field name="email" invisble="1"/>
+                <field name="phone" invisble="1"/>
                 <field name="legal_status_id" invisble="1"/>
                 <field name="region_id" invisble="1"/>
                 <field name="activity_sector_id" invisble="1"/>

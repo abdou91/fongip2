@@ -35,6 +35,8 @@ class FinancingRequest(models.Model):
     transmitted_to = fields.Many2one('hr.employee',string = "Transmis à")
     partner_id =  fields.Many2one('res.partner',string = "Porteur de projet")
     date = fields.Date(string = "Date")
+    email = fields.Char(string = "Email", related='partner_id.email')
+    phone = fields.Char(string = "Numéro téléphone",related='partner_id.mobile')
     genre = fields.Selection(GENRE, string = "Genre",related = 'partner_id.genre')
     legal_status_id = fields.Many2one('legal.status',string = "Forme juridique",related = 'partner_id.parent_id.legal_status_id')
     activity_sector_id = fields.Many2one('activity.sector',string = "Secteur d'activité",related = 'partner_id.parent_id.activity_sector_id')
