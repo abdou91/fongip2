@@ -37,11 +37,16 @@ class FinancingRequest(models.Model):
     date = fields.Date(string = "Date")
     email = fields.Char(string = "Email", related='partner_id.email')
     phone = fields.Char(string = "Numéro téléphone",related='partner_id.mobile')
-    genre = fields.Selection(GENRE, string = "Genre",related = 'partner_id.genre')
+    genre = fields.Selection(GENRE, string = "Genre")
     legal_status_id = fields.Many2one('legal.status',string = "Forme juridique",related = 'partner_id.parent_id.legal_status_id')
     activity_sector_id = fields.Many2one('activity.sector',string = "Secteur d'activité",related = 'partner_id.parent_id.activity_sector_id')
     filiere_id = fields.Many2one('financing.filiere',string = "Filière",related='partner_id.parent_id.filiere_id')
     region_id = fields.Many2one('res.country.region', string = "Région",related='partner_id.parent_id.region_id')
+
+    @api.onchange('partner_id')
+    def _onchange_partner_id(self):
+        if self.partner_id:
+            self.genre = self.partner_id.genre
 
 
     @api.depends('credit_requested','quotite')
