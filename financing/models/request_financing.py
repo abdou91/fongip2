@@ -35,8 +35,12 @@ class FinancingRequest(models.Model):
     transmitted_to = fields.Many2one('hr.employee',string = "Transmis à")
     partner_id =  fields.Many2one('res.partner',string = "Porteur de projet")
     date = fields.Date(string = "Date")
-    filename = fields.Char('File Name')
-    data = fields.Binary('Importer les critères')
+    genre = fields.Char(string = "Genre",related = 'partner_id.genre')
+    legal_status_id = fields.Many2one('legal.status',string = "Forme juridique",related = 'partner_id.parent_id.legal_status_id')
+    activity_sector_id = fields.fields('activity.sector',string = "Secteur d'activité",related = 'partner_id.parent_id.activity_sector_id')
+    filiere_id = fields.Many2one('financing.filiere',string = "Filière",related='partner_id.parent_id.filiere_id')
+    region_id = fields.Char(string)
+
 
     @api.depends('credit_requested','quotite')
     def _compute_guarantee_amount(self):
@@ -56,7 +60,7 @@ class FinancingRequestImport(models.Model):
     _name = 'financing.request.import'
     _description = 'Import demande de financement'
 
-    import_date = fields.Datetime(string = "Date d'import")
+    import_date = fields.Datetime(string = "Date d'import",default=lambda self: fields.Datetime.now())
     filename = fields.Char('File Name')
     data = fields.Binary('Importer le fichier')
     request_line_ids = fields.One2many('financing.request.line','financing_request_id',string = "Ligne de demandes")
