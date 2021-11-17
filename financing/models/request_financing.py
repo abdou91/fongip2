@@ -37,9 +37,9 @@ class FinancingRequest(models.Model):
     date = fields.Date(string = "Date")
     genre = fields.Char(string = "Genre",related = 'partner_id.genre')
     legal_status_id = fields.Many2one('legal.status',string = "Forme juridique",related = 'partner_id.parent_id.legal_status_id')
-    activity_sector_id = fields.fields('activity.sector',string = "Secteur d'activité",related = 'partner_id.parent_id.activity_sector_id')
+    activity_sector_id = fields.Many2one('activity.sector',string = "Secteur d'activité",related = 'partner_id.parent_id.activity_sector_id')
     filiere_id = fields.Many2one('financing.filiere',string = "Filière",related='partner_id.parent_id.filiere_id')
-    region_id = fields.Char(string)
+    region_id = fields.Many2one('res.country.region', string = "Région",related='partner_id.parent_id.region_id')
 
 
     @api.depends('credit_requested','quotite')
