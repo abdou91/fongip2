@@ -185,10 +185,10 @@ class FinancingRequestImport(models.Model):
             dicos.append(dict(zip(columns, liste[i])))
         for i in range(len(dicos)):
             for key in dicos[i]:
-                """if 'transmission_date' == key and dicos[i][key]:
+                if 'transmission_date' == key and dicos[i][key]:
                     dicos[i][key] = excel_utility.convert_excel_date_to_python_date(dicos[i][key])
                 if 'imputation_date' == key and dicos[i][key]:
-                    dicos[i][key] = excel_utility.convert_excel_date_to_python_date(dicos[i][key])"""
+                    dicos[i][key] = excel_utility.convert_excel_date_to_python_date(dicos[i][key])
                 if 'reception_mode' == key and dicos[i][key]:
                     reception_mode = dicos[i][key]
                     if reception_mode.strip().lower() == "dossier électronique":
@@ -224,7 +224,7 @@ class FinancingRequestLine(models.Model):
     _name = 'financing.request.line'
     _description = 'Ligne demande de financement'
 
-    transmission_date = fields.Char(string = "Date de transmission")
+    transmission_date = fields.Date(string = "Date de transmission")
     reception_mode = fields.Selection(RECEPTION_MODE,default="dossier_physique",string = "Mode de réception")
     customer_name = fields.Char(string = "Prénom et nom du porteur de projet")
     genre = fields.Selection(GENRE, string = "Genre",default = "Homme")
@@ -241,6 +241,6 @@ class FinancingRequestLine(models.Model):
     quotite = fields.Float(string = "Quotité de garantie")
     guarantee_amount = fields.Monetary(string = "Garantie éventuelle")
     number_of_job = fields.Integer(string = "Nombre d'emplois")
-    imputation_date = fields.Char(string = "Date d'imputation à l'ingénieur")
+    imputation_date = fields.Date(string = "Date d'imputation à l'ingénieur")
     transmitted_to = fields.Char(string = "Transmis à")
     financing_request_id = fields.Many2one('financing.request.import',string = 'Demande de financement')
