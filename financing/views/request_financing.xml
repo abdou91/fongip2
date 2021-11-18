@@ -70,11 +70,11 @@
                 <field name="transmission_date"/>
                 <field name="reception_mode"/>
                 <field name="partner_id"/>
-                <field name="legal_status_id" invisible="1"/>
-                <field name="region_id" invisible="1"/>
-                <field name="activity_sector_id" invisible="1"/>
-                <field name="filiere_id" invisible="1"/>
-                <field name="genre" invisible="1"/>
+                <field name="legal_status_id"/>
+                <field name="region_id"/>
+                <field name="activity_sector_id"/>
+                <field name="filiere_id"/>
+                <field name="genre"/>
 
 
                 <filter string="Aujourd'hui" name="today"
