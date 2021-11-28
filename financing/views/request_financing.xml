@@ -209,7 +209,7 @@
     <menuitem
       name="Financement"  
       id="menu_root"
-      groups="hr.group_hr_user"
+      groups="financing_group_user"
       web_icon="financing,static/description/icon.png"
       sequence="100"
       />
@@ -217,12 +217,14 @@
               name="Financement" 
               id="menu_financing" 
               parent="menu_root"
+              groups="financing_group_user"
               />
     <menuitem 
               name="Demandes" 
               id="menu_financing_request" 
               parent="menu_financing"
               action="financing_request_action"
+              groups="financing_group_user"
               sequence="10"
               />
     <menuitem 
@@ -230,6 +232,7 @@
               id="menu_financing_request_import" 
               parent="menu_financing"
               action="financing_request_import_action"
+              groups="financing_group_user"
               sequence="20"
               />
     <menuitem 
@@ -237,6 +240,7 @@
               id="menu_configuration" 
               parent="menu_root"
               sequence="20"
+              groups="financing_group_manager"
               />
   </data>
 </odoo>

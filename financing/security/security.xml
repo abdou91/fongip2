@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="module_financing_category" model="ir.module.category">
+            <field name="name">Financement</field>
+            <field name="sequence">17</field>
+    </record>
+    <record id="financing_group_user" model="res.groups">
+            <field name="name">Utilsateur</field>
+            <field name="category_id" ref="base.module_category_human_resources_financing"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+    <record id="financing_group_manager" model="res.groups">
+            <field name="name">Administrateur</field>
+            <field name="implied_ids" eval="[(4, ref('financing_group_user'))]"/>
+            <field name="category_id" ref="base.module_category_human_resources_financing"/>
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
+
+    <data noupdate="0">
+        <record id="base.default_user" model="res.users">
+            <field name="groups_id" eval="[(4,ref('financing.financing_group_manager'))]"/>
+        </record>
+        
+    </data>
+</odoo>
