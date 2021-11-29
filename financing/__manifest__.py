@@ -26,8 +26,8 @@
 
     # always loaded
     'data': [
-        'security/ir.model.access.csv',
         'security/security.xml',
+        'security/ir.model.access.csv',
         'views/request_financing.xml',
         'views/res_partner.xml',
         #'report/hr_pointage_reports.xml',
