@@ -15,6 +15,7 @@
 
     # Categories can be used to filter modules in modules listing
     #'category': 'HR',
+    'category': 'Human Resources/Financing',
     'version': '0.1',
 
     # any module necessary for this one to work correctly
@@ -26,8 +27,8 @@
 
     # always loaded
     'data': [
+        'security/security.xml',
         'security/ir.model.access.csv',
-        #'security/hr_pointage_groups.xml',
         'views/request_financing.xml',
         'views/res_partner.xml',
         #'report/hr_pointage_reports.xml',

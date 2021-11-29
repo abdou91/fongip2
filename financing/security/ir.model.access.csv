@@ -1,15 +1,25 @@
 id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
-access_financing_request,financing_request,model_financing_request,,1,1,1,1
-access_activity_sector,activity_sector,model_activity_sector,,1,1,1,1
-access_financing_filiere,financing_filiere,model_financing_filiere,,1,1,1,1
-access_financing_psp,financing_psp,model_financing_psp,,1,1,1,1
-access_legal_status,leagl_status,model_legal_status,,1,1,1,1
 
-access_financing_request_import,financing_request_import,model_financing_request_import,,1,1,1,1
-access_financing_request_line,financing_request_line,model_financing_request_line,,1,1,1,1
+access_financing_request_user,financing_request,model_financing_request,financing_group_user,1,1,1,1
+access_activity_sector_user,activity_sector,model_activity_sector,financing_group_user,1,1,1,0
+access_financing_filiere_user,financing_filiere,model_financing_filiere,financing_group_user,1,1,0,1
+access_financing_psp_user,financing_psp,model_financing_psp,financing_group_user,1,1,1,0
+access_legal_status_user,leagl_status,model_legal_status,financing_group_user,1,1,1,0
+access_financing_request_import_user,financing_request_import,model_financing_request_import,financing_group_user,1,0,0,0
+access_financing_request_line_user,financing_request_line,model_financing_request_line,financing_group_user,1,0,0,0
 
-access_res_country_region,res_country_region,model_res_country_region,,1,1,1,1
-access_res_country_department,res_country_department,model_res_country_department,,1,1,1,1
+access_res_country_region_user,res_country_region,model_res_country_region,financing_group_user,1,1,1,0
+access_res_country_department_user,res_country_department,model_res_country_department,financing_group_user,1,1,1,0
+access_company_type_user,company_type,model_company_type,financing_group_user,1,1,1,0
 
-access_company_type,company_type,model_company_type,,1,1,1,1
 
+access_financing_request_manager,financing_request,model_financing_request,financing_group_manager,1,1,1,1
+access_activity_sector_manager,activity_sector,model_activity_sector,financing_group_manager,1,1,1,1
+access_financing_filiere_manager,financing_filiere,model_financing_filiere,financing_group_manager,1,1,1,1
+access_financing_psp_manager,financing_psp,model_financing_psp,financing_group_manager,1,1,1,1
+access_legal_status_manager,leagl_status,model_legal_status,financing_group_manager,1,1,1,1
+access_financing_request_import_manager,financing_request_import,model_financing_request_import,financing_group_manager,1,1,1,1
+access_financing_request_line_manager,financing_request_line,model_financing_request_line,financing_group_manager,1,1,1,1
+access_res_country_region_manager,res_country_region,model_res_country_region,financing_group_manager,1,1,1,1
+access_res_country_department_manager,res_country_department,model_res_country_department,financing_group_manager,1,1,1,1
+access_company_type_manager,company_type,model_company_type,financing_group_manager,1,1,1,1
