@@ -15,7 +15,7 @@
 
     # Categories can be used to filter modules in modules listing
     #'category': 'HR',
-    'category': 'Human Resources/Financing'
+    'category': 'Human Resources/Financing',
     'version': '0.1',
 
     # any module necessary for this one to work correctly
